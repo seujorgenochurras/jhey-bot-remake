@@ -3,14 +3,16 @@ package JheyBot;
 
 
 
-import JheyBot.Events.EventListener;
+import JheyBot.Commands.EventListener;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
 
 import javax.security.auth.login.LoginException;
+import java.io.FileWriter;
 
 
 public class Bot{
@@ -19,9 +21,13 @@ public class Bot{
    private final Dotenv dotenv;
 
    public Bot() throws LoginException {
+     
       dotenv = Dotenv.configure().load();
 
       DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(dotenv.get("TROLLED_BY_JOTINHA"));
+
+      //Don't forget to enable all of them in "https://discord.com/developers/applications"
+      builder.enableIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS));
 
       builder.setActivity(Activity.watching("SEU PAI DE CALCINHA"));
       builder.setStatus(OnlineStatus.ONLINE);
