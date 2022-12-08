@@ -62,12 +62,12 @@ public class PlayerManager {
 
          @Override
          public void noMatches() {
-
+            textChannel.sendMessage("Não encontrei a musica desculpe ;-;").queue();
          }
 
          @Override
          public void loadFailed(FriendlyException exception) {
-
+            textChannel.sendMessage("Alguma coisa deu errado exception : " + exception.toString()).queue();
          }
       });
    }
