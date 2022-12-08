@@ -6,6 +6,7 @@ package JheyBot;
 import JheyBot.Commands.EventListener;
 import JheyBot.Commands.play.Play;
 import JheyBot.Commands.play.Skip;
+import JheyBot.Commands.play.Stop;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
@@ -38,6 +39,7 @@ public class Bot{
       shardManager.addEventListener(new EventListener());
       shardManager.addEventListener(new Play());
       shardManager.addEventListener(new Skip());
+      shardManager.addEventListener(new Stop());
    }
 
 

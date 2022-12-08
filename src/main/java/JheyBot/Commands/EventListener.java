@@ -1,5 +1,6 @@
 package JheyBot.Commands;
 
+import JheyBot.Commands.play.Stop;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -25,6 +26,8 @@ public class EventListener extends ListenerAdapter {
 
       commandDataList.add(Commands.slash("skip", "Skips the currently music"));
 
+      commandDataList.add(Commands.slash("stop", "Makes the bot quit voice channel"));
+
       event.getGuild().updateCommands().addCommands(commandDataList).queue();
    }
 
@@ -32,15 +35,21 @@ public class EventListener extends ListenerAdapter {
    public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
       String command = event.getName();
       if(command.equals("play")){
-         event.reply("Enviando musica...").queue();
+         event.reply("Enviando musica...").setEphemeral(true).queue();
          join(event);
       } else if(command.equals("skip")){
          if(!event.getMember().getVoiceState().inAudioChannel()){
-            event.reply("VOCE NEM TA EM UM CANAL KRL").queue();
+            event.reply(event.getUser().getName() + " VOCE NEM TA EM UM CANAL KRL").queue();
             return;
          }
          event.reply("Pulando musica").queue();
          skipMusic(event);
+      } else if (command.equals("stop")) {
+         if(!event.getMember().getVoiceState().inAudioChannel()) {
+            event.reply(event.getUser().getName() + " VOCE NEM TA EM UM CANAL KRL").queue();
+         }
+         event.reply("Saindo").queue();
+            Stop.stopMusic(event);
       }
    }
 
