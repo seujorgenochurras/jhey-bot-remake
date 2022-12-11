@@ -17,7 +17,13 @@ public class Play extends ListenerAdapter {
          if(!isURL(query)){
             query = "ytsearch:" + query +" audio";
          }
-         PlayerManager.getINSTANCE().loadAndPlay(event.getChannel().asTextChannel(), query);
+         try {
+            PlayerManager.getINSTANCE().loadAndPlay(event.getMessageChannel(), event.getGuild(), query);
+         } catch (Exception e){
+           event.reply("Algo deu errado, pfv contate o dono `churrasco com seu jorge#2619`").queue();
+            System.out.println(e.toString());
+         }
+
       }
 
       public static boolean isURL(String url){

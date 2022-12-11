@@ -8,7 +8,11 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.channel.ChannelType;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.GuildChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,8 +39,10 @@ public class PlayerManager {
          return guildMusicManager;
       });
    }
-   public void loadAndPlay(TextChannel textChannel, String trackURL){
-      final GuildMusicManager musicManager = this.getMusicManager(textChannel.getGuild());
+   public <T extends MessageChannel> void loadAndPlay (T textChannel, Guild guild, String trackURL){
+      //Need guild as a parameter because i cant find a message channel that includes getGuild() and sendMessage() at the same time
+      //if found PLS FIX
+      final GuildMusicManager musicManager = getMusicManager(guild);
 
       this.audioPlayerManager.loadItemOrdered(musicManager, trackURL, new AudioLoadResultHandler() {
          @Override
