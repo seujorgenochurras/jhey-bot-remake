@@ -1,4 +1,4 @@
-package JheyBot.Commands;
+package JheyBot.Commands.CommandHandlers;
 
 import JheyBot.Commands.play.Stop;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;

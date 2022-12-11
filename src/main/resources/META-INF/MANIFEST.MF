@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: C:\Users\User\Desktop\projetos\JheyBot Remake\src\main\java\
+ JheyBot\Bot.java
+

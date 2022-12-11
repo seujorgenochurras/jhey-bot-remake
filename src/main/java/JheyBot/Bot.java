@@ -3,7 +3,7 @@ package JheyBot;
 
 
 
-import JheyBot.Commands.EventListener;
+import JheyBot.Commands.CommandHandlers.EventListener;
 import JheyBot.Commands.play.Play;
 import JheyBot.Commands.play.Skip;
 import JheyBot.Commands.play.Stop;
@@ -19,7 +19,7 @@ import javax.security.auth.login.LoginException;
 
 public class Bot{
 
-   private final ShardManager shardManager;
+   public static ShardManager shardManager;
    private final Dotenv dotenv;
 
    public Bot() throws LoginException {
@@ -37,7 +37,6 @@ public class Bot{
 
       //Register Listeners
       shardManager.addEventListener(new EventListener());
-      shardManager.addEventListener(new Play());
       shardManager.addEventListener(new Skip());
       shardManager.addEventListener(new Stop());
    }
