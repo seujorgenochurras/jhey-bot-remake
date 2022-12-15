@@ -7,7 +7,6 @@ public class GuildMusicManager {
    public final AudioPlayer audioPlayer;
    public final TrackSchedule schedule;
    private final AudioPlayerSendHandler sendHandler;
-
    public GuildMusicManager(AudioPlayerManager audioPlayerManager){
       this.audioPlayer = audioPlayerManager.createPlayer();
       this.schedule = new TrackSchedule(this.audioPlayer);
