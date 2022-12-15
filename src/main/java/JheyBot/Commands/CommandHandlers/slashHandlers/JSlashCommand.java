@@ -13,9 +13,9 @@ public interface JSlashCommand {
 
    String getDescription();
 
-   @Nullable List<OptionData> getOptions();
+   @Nullable default List<OptionData> getOptions() {return null;}
 
-   default JSlashCommand getInstance() {
-      return this;
+   default void build() {
+    JheySlashCommand2.add(this);
    }
 }

@@ -1,15 +1,13 @@
 package JheyBot.Commands.play;
 
-import JheyBot.Commands.CommandHandlers.slashHandlers.CommandAnnotation;
+import JheyBot.Commands.CommandHandlers.slashHandlers.Command;
 import JheyBot.Commands.CommandHandlers.slashHandlers.JSlashCommand;
 import JheyBot.musicHandler.PlayerManager;
 import net.dv8tion.jda.api.events.interaction.command.GenericCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
-import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
-import java.util.List;
 
-@CommandAnnotation
+@Command
 public class Skip implements JSlashCommand {
 
    public static void skipMusic(GenericCommandInteractionEvent event) {
@@ -28,16 +26,7 @@ public class Skip implements JSlashCommand {
 
    @Override
    public String getDescription() {
-      return "null";
+      return "Skips the currently music";
    }
-
-   @Override
-   public List<OptionData> getOptions() {
-      return null;
-   }
-
-
-
-
 
 }

@@ -2,7 +2,6 @@ package JheyBot.Commands.CommandHandlers.slashHandlers;
 
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
-import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,13 +26,6 @@ public class JheySlashCommand2 extends ListenerAdapter {
          }
       }
    }
-
-
-   @Override
-   public void onReady(ReadyEvent event) {
-     
-   }
-
    @Override
    public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
       for(JSlashCommand command : commands){
@@ -42,6 +34,5 @@ public class JheySlashCommand2 extends ListenerAdapter {
             break;
          }
       }
-
    }
 }

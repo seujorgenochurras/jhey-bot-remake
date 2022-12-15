@@ -1,11 +1,8 @@
 package JheyBot;
 
-import JheyBot.Commands.CommandHandlers.Teste;
-import JheyBot.Commands.CommandHandlers.slashHandlers.CommandAnnotation;
+import JheyBot.Commands.CommandHandlers.slashHandlers.Command;
 import JheyBot.Commands.CommandHandlers.slashHandlers.JSlashCommand;
 import JheyBot.Commands.CommandHandlers.slashHandlers.JheySlashCommand2;
-import JheyBot.Commands.play.Skip;
-import JheyBot.Commands.play.Stop;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
@@ -16,7 +13,6 @@ import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 
 import javax.security.auth.login.LoginException;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Set;
@@ -28,17 +24,19 @@ public class Bot{
 
    public Bot() throws LoginException {
 
+      //Getting Token
       dotenv = Dotenv.configure().load();
-
       DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(dotenv.get("TROLLED_BY_JOTINHA"));
 
       //Don't forget to enable all of them in "https://discord.com/developers/applications"
       builder.enableIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS));
 
+      //:TROLLFACE:
       builder.setActivity(Activity.watching("SEU PAI DE CALCINHA"));
       builder.setStatus(OnlineStatus.ONLINE);
-      shardManager = builder.build();
 
+
+      shardManager = builder.build();
       //Register Listeners
       shardManager.addEventListener(new JheySlashCommand2());
 
@@ -51,14 +49,15 @@ public class Bot{
 
    public static void main(String[] args) {
 
+      //Registering all commands
          Reflections reflections = new Reflections("JheyBot.Commands.play", Scanners.values());
-         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(CommandAnnotation.class);
+         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(Command.class);
          classes.forEach((Class<?> classe) ->{
             if(classe.getInterfaces()[0] != null && classe.getInterfaces()[0].getSimpleName().equals("JSlashCommand")){
                try {
-                  JSlashCommand morte = (JSlashCommand) classe.getDeclaredConstructor().newInstance();
-                  Method method = classe.getMethod("getInstance");
-                  JheySlashCommand2.add((JSlashCommand) method.invoke(morte));
+                  JSlashCommand classInstance = (JSlashCommand) classe.getDeclaredConstructor().newInstance();
+                  Method method = classe.getMethod("build");
+                  method.invoke(classInstance);
                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException |
                         InstantiationException e) {
                   throw new RuntimeException(e);
@@ -66,6 +65,8 @@ public class Bot{
             }
          });
 
+
+      //Loging in
       try {
          Bot bot = new Bot();
       }catch (LoginException e){
