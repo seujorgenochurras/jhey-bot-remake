@@ -1,10 +1,9 @@
 package JheyBot;
 
-
-
-
-import JheyBot.Commands.CommandHandlers.EventListener;
-import JheyBot.Commands.play.Play;
+import JheyBot.Commands.CommandHandlers.Teste;
+import JheyBot.Commands.CommandHandlers.slashHandlers.CommandAnnotation;
+import JheyBot.Commands.CommandHandlers.slashHandlers.JSlashCommand;
+import JheyBot.Commands.CommandHandlers.slashHandlers.JheySlashCommand2;
 import JheyBot.Commands.play.Skip;
 import JheyBot.Commands.play.Stop;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -13,9 +12,14 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
+import org.reflections.Reflections;
+import org.reflections.scanners.Scanners;
 
 import javax.security.auth.login.LoginException;
-
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Set;
 
 public class Bot{
 
@@ -36,16 +40,32 @@ public class Bot{
       shardManager = builder.build();
 
       //Register Listeners
-      shardManager.addEventListener(new EventListener());
-      shardManager.addEventListener(new Skip());
-      shardManager.addEventListener(new Stop());
+      shardManager.addEventListener(new JheySlashCommand2());
+
    }
 
 
    public ShardManager shardManager(){
       return shardManager;
    }
+
    public static void main(String[] args) {
+
+         Reflections reflections = new Reflections("JheyBot.Commands.play", Scanners.values());
+         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(CommandAnnotation.class);
+         classes.forEach((Class<?> classe) ->{
+            if(classe.getInterfaces()[0] != null && classe.getInterfaces()[0].getSimpleName().equals("JSlashCommand")){
+               try {
+                  JSlashCommand morte = (JSlashCommand) classe.getDeclaredConstructor().newInstance();
+                  Method method = classe.getMethod("getInstance");
+                  JheySlashCommand2.add((JSlashCommand) method.invoke(morte));
+               } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException |
+                        InstantiationException e) {
+                  throw new RuntimeException(e);
+               }
+            }
+         });
+
       try {
          Bot bot = new Bot();
       }catch (LoginException e){

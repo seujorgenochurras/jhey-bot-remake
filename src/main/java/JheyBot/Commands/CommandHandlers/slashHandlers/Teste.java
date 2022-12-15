@@ -1,5 +1,5 @@
 package JheyBot.Commands.CommandHandlers.slashHandlers;
 
-public class JheySlashCallback {
+public abstract class Teste {
 
 }
