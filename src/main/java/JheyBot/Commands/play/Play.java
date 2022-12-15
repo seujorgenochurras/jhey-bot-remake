@@ -69,7 +69,7 @@ public class Play implements JSlashCommand {
    @Override
    public List<OptionData> getOptions() {
       List<OptionData> optionData = new ArrayList<>();
-      optionData.add(new OptionData(OptionType.STRING, "query", "Nome/link da musica"));
+      optionData.add(new OptionData(OptionType.STRING, "query", "Nome/link da musica").setRequired(true));
       return optionData;
    }
 
