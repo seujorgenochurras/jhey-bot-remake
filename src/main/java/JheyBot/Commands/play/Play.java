@@ -1,7 +1,7 @@
 package JheyBot.Commands.play;
 
-import JheyBot.Commands.CommandHandlers.Command;
-import JheyBot.Commands.CommandHandlers.CommandTypes;
+import JheyBot.Commands.CommandHandlers.others.CommandType;
+import JheyBot.Commands.CommandHandlers.others.CommandTypes;
 import JheyBot.Commands.CommandHandlers.slashHandlers.JSlashCommandInterface;
 import JheyBot.Commands.play.musicHandler.PlayerManager;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
@@ -14,7 +14,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Command(type = CommandTypes.SLASH_COMMAND)
+@CommandType(type = CommandTypes.SLASH_COMMAND)
 public class Play implements JSlashCommandInterface {
 
    private static void search(SlashCommandInteractionEvent event){
@@ -40,10 +40,7 @@ public class Play implements JSlashCommandInterface {
          }
       }
       public static void join(SlashCommandInteractionEvent event){
-         if(!event.getMember().getVoiceState().inAudioChannel()){
-            event.reply("SEU IMBECIL ENTRA NA PORRA DE UM CANAL").queue();
-            return;
-         }
+
          AudioChannel userChannel = event.getMember().getVoiceState().getChannel();
          AudioManager audioManager = event.getGuild().getAudioManager();
          audioManager.openAudioConnection(userChannel);
@@ -54,6 +51,10 @@ public class Play implements JSlashCommandInterface {
    @Override
    public void callBack(SlashCommandInteractionEvent event) {
       event.getChannel().sendTyping().queue();
+      if(!event.getMember().getVoiceState().inAudioChannel()){
+         event.reply("SEU IMBECIL ENTRA NA PORRA DE UM CANAL").setEphemeral(true).queue();
+         return;
+      }
       event.reply("Colocando musica").setEphemeral(true).queue();
       join(event);
    }

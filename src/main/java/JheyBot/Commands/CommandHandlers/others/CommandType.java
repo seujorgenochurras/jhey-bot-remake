@@ -1,4 +1,6 @@
-package JheyBot.Commands.CommandHandlers;
+package JheyBot.Commands.CommandHandlers.others;
+
+import JheyBot.Commands.CommandHandlers.others.CommandTypes;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,7 +12,7 @@ import java.lang.annotation.Target;
 * */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Command {
+public @interface CommandType {
    CommandTypes type();
-
 }
+
