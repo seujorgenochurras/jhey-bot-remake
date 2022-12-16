@@ -1,8 +1,9 @@
 package JheyBot;
 
-import JheyBot.Commands.CommandHandlers.Command;
+import JheyBot.Commands.CommandHandlers.others.CommandType;
 import JheyBot.Commands.CommandHandlers.slashHandlers.JSlashCommandInterface;
-import JheyBot.Commands.CommandHandlers.slashHandlers.JheySlashCommand;
+import JheyBot.Commands.CommandHandlers.slashHandlers.JSlashCommand;
+import JheyBot.Commands.TestCommand;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
@@ -39,8 +40,8 @@ public class Bot{
 
       shardManager = builder.build();
       //Register Listeners
-      shardManager.addEventListener(new JheySlashCommand());
-
+      shardManager.addEventListener(new JSlashCommand());
+      shardManager.addEventListener(new TestCommand());
    }
 
 
@@ -51,7 +52,7 @@ public class Bot{
    public static void main(String[] args) {
       //Registering all commands
          Reflections reflections = new Reflections("JheyBot.Commands.play", Scanners.values());
-         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(Command.class);
+         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(CommandType.class);
          classes.forEach((Class<?> classe) ->{
             if(classe.getInterfaces()[0] != null && classe.getInterfaces()[0].getSimpleName().equals("JSlashCommandInterface")){
                try {

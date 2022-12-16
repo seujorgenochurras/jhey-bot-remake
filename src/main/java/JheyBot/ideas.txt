@@ -1,0 +1,4 @@
+//todo
+- Prefix individual para cada usuario
+- fazer comandos fucnionar com prefixo tmb
+-
