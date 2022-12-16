@@ -1,5 +1,5 @@
 //Credits to TR!STAN (i just copied his code)
-package JheyBot.musicHandler;
+package JheyBot.Commands.play.musicHandler;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;

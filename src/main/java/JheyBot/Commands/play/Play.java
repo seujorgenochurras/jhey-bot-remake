@@ -1,8 +1,9 @@
 package JheyBot.Commands.play;
 
-import JheyBot.Commands.CommandHandlers.slashHandlers.Command;
-import JheyBot.Commands.CommandHandlers.slashHandlers.JSlashCommand;
-import JheyBot.musicHandler.PlayerManager;
+import JheyBot.Commands.CommandHandlers.Command;
+import JheyBot.Commands.CommandHandlers.CommandTypes;
+import JheyBot.Commands.CommandHandlers.slashHandlers.JSlashCommandInterface;
+import JheyBot.Commands.play.musicHandler.PlayerManager;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -13,8 +14,8 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Command
-public class Play implements JSlashCommand {
+@Command(type = CommandTypes.SLASH_COMMAND)
+public class Play implements JSlashCommandInterface {
 
    private static void search(SlashCommandInteractionEvent event){
          String query = event.getOption("query").getAsString();
@@ -53,6 +54,7 @@ public class Play implements JSlashCommand {
    @Override
    public void callBack(SlashCommandInteractionEvent event) {
       event.getChannel().sendTyping().queue();
+      event.reply("Colocando musica").setEphemeral(true).queue();
       join(event);
    }
 

@@ -1,8 +1,8 @@
 package JheyBot;
 
-import JheyBot.Commands.CommandHandlers.slashHandlers.Command;
-import JheyBot.Commands.CommandHandlers.slashHandlers.JSlashCommand;
-import JheyBot.Commands.CommandHandlers.slashHandlers.JheySlashCommand2;
+import JheyBot.Commands.CommandHandlers.Command;
+import JheyBot.Commands.CommandHandlers.slashHandlers.JSlashCommandInterface;
+import JheyBot.Commands.CommandHandlers.slashHandlers.JheySlashCommand;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
@@ -25,6 +25,7 @@ public class Bot{
    public Bot() throws LoginException {
 
       //Getting Token
+
       dotenv = Dotenv.configure().load();
       DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(dotenv.get("TROLLED_BY_JOTINHA"));
 
@@ -38,7 +39,7 @@ public class Bot{
 
       shardManager = builder.build();
       //Register Listeners
-      shardManager.addEventListener(new JheySlashCommand2());
+      shardManager.addEventListener(new JheySlashCommand());
 
    }
 
@@ -48,14 +49,13 @@ public class Bot{
    }
 
    public static void main(String[] args) {
-
       //Registering all commands
          Reflections reflections = new Reflections("JheyBot.Commands.play", Scanners.values());
          Set<Class<?>> classes = reflections.getTypesAnnotatedWith(Command.class);
          classes.forEach((Class<?> classe) ->{
-            if(classe.getInterfaces()[0] != null && classe.getInterfaces()[0].getSimpleName().equals("JSlashCommand")){
+            if(classe.getInterfaces()[0] != null && classe.getInterfaces()[0].getSimpleName().equals("JSlashCommandInterface")){
                try {
-                  JSlashCommand classInstance = (JSlashCommand) classe.getDeclaredConstructor().newInstance();
+                  JSlashCommandInterface classInstance = (JSlashCommandInterface) classe.getDeclaredConstructor().newInstance();
                   Method method = classe.getMethod("build");
                   method.invoke(classInstance);
                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException |

@@ -9,16 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class JheySlashCommand2 extends ListenerAdapter {
+public class JheySlashCommand extends ListenerAdapter {
 
-   public static List<JSlashCommand> commands = new ArrayList<>();
-   public static void add(JSlashCommand command){
+   public static List<JSlashCommandInterface> commands = new ArrayList<>();
+   public static void add(JSlashCommandInterface command){
      commands.add(command);
    }
 
    @Override
    public void onGuildReady(GuildReadyEvent event) {
-      for(JSlashCommand command : commands) {
+      for(JSlashCommandInterface command : commands) {
          if (command.getOptions() == null) {
             event.getGuild().upsertCommand(command.getName(), command.getDescription()).queue();
          } else {
@@ -28,7 +28,7 @@ public class JheySlashCommand2 extends ListenerAdapter {
    }
    @Override
    public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
-      for(JSlashCommand command : commands){
+      for(JSlashCommandInterface command : commands){
          if(event.getName().equals(command.getName())){
             command.callBack(event);
             break;

@@ -1,14 +1,15 @@
 package JheyBot.Commands.play;
 
-import JheyBot.Commands.CommandHandlers.slashHandlers.Command;
-import JheyBot.Commands.CommandHandlers.slashHandlers.JSlashCommand;
-import JheyBot.musicHandler.PlayerManager;
+import JheyBot.Commands.CommandHandlers.Command;
+import JheyBot.Commands.CommandHandlers.CommandTypes;
+import JheyBot.Commands.CommandHandlers.slashHandlers.JSlashCommandInterface;
+import JheyBot.Commands.play.musicHandler.PlayerManager;
 import net.dv8tion.jda.api.events.interaction.command.GenericCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
 
-@Command
-public class Skip implements JSlashCommand {
+@Command(type = CommandTypes.SLASH_COMMAND)
+public class Skip implements JSlashCommandInterface {
 
    public static void skipMusic(GenericCommandInteractionEvent event) {
       PlayerManager.getINSTANCE().getMusicManager(event.getGuild()).schedule.nextTrack();
