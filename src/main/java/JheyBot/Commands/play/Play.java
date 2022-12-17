@@ -49,7 +49,7 @@ public class Play implements JSlashCommandInterface {
 
 
    @Override
-   public void callBack(SlashCommandInteractionEvent event) {
+   public void callBack(SlashCommandInteractionEvent event){
       event.getChannel().sendTyping().queue();
       if(!event.getMember().getVoiceState().inAudioChannel()){
          event.reply("SEU IMBECIL ENTRA NA PORRA DE UM CANAL").setEphemeral(true).queue();

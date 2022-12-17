@@ -11,5 +11,6 @@ I'm still learning about Maven, so idk how to build it. <br>
 But the .env.example is where you probably want to go first. There, you will see the configuration
 which right now is just the bot token.
 
+<!--TODO ADD MANAGER GUIDE -->
 
 > I know that this readme is fucked, and I don't really care, so if for some reason you need my help, contact me at discord `churrasco com seu jorge#2619` 

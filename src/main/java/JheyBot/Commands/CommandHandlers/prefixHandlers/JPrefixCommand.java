@@ -20,7 +20,6 @@ public class JPrefixCommand extends ListenerAdapter {
    @Override
    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
       String prefix = Bot.prefix;
-      System.out.println(prefix);
      for(JPrefixCommandInterface command : commands){
        if(event.getMessage().getContentRaw().startsWith(prefix + command.getName())){
           command.callBack(event);
