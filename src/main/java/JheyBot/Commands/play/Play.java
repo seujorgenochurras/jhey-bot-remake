@@ -6,7 +6,6 @@ import JheyBot.Commands.CommandHandlers.slashHandlers.JSlashCommandInterface;
 import JheyBot.Commands.play.musicHandler.PlayerManager;
 import JheyBot.Commands.play.musicHandler.UserNotInVoiceChannelException;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
-import net.dv8tion.jda.api.events.interaction.command.GenericCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
@@ -29,7 +28,7 @@ public class Play implements JSlashCommandInterface {
             query = "ytsearch:" + query +" audio";
          }
          try {
-            PlayerManager.getINSTANCE().loadAndPlay(event.getMessageChannel(), event.getGuild(), query);
+            PlayerManager.getInstance().loadAndPlay(event.getMessageChannel(), event.getGuild(), query);
          } catch (Exception e){
            event.reply("Algo deu errado, pfv contate o dono `churrasco com seu jorge#2619`").queue();
             System.out.println(e.toString());

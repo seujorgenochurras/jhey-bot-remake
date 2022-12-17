@@ -1,5 +1,7 @@
 package JheyBot;
 
+import JheyBot.Commands.CommandHandlers.both.JBothHandler;
+import JheyBot.Commands.CommandHandlers.both.JBothHandlerInterface;
 import JheyBot.Commands.CommandHandlers.others.CommandType;
 import JheyBot.Commands.CommandHandlers.prefixHandlers.JPrefixCommand;
 import JheyBot.Commands.CommandHandlers.prefixHandlers.JPrefixCommandInterface;
@@ -44,6 +46,7 @@ public class Bot{
       //Register Listeners
       shardManager.addEventListener(new JSlashCommand());
       shardManager.addEventListener(new JPrefixCommand());
+     // shardManager.addEventListener(new JBothHandler());
    }
 
 
@@ -59,6 +62,7 @@ public class Bot{
                     Class<?>[] interfaces = classe.getInterfaces();
                     if (interfaces.length == 0) return;
                      //TODO find a way to fix this messy code
+                     //BRUH
                     if (interfaces[0].equals(JSlashCommandInterface.class)) {
                        try {
                           JSlashCommandInterface classInstance = (JSlashCommandInterface) classe.getDeclaredConstructor().newInstance();
@@ -76,7 +80,15 @@ public class Bot{
                        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException |
                                 InstantiationException e) {
                           throw new RuntimeException(e);
-
+                       }
+                    } else if(interfaces[0].equals(JBothHandlerInterface.class)){
+                       try {
+                          JBothHandler classInstance = (JBothHandler) classe.getDeclaredConstructor().newInstance();
+                          Method method = classe.getMethod("build");
+                          method.invoke(classInstance);
+                       } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException |
+                                InstantiationException e) {
+                          throw new RuntimeException(e);
                        }
                     }
                  });

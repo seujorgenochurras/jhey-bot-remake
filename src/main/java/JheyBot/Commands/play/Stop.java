@@ -13,7 +13,7 @@ public class Stop implements JSlashCommandInterface {
    public static void stopMusic(GenericCommandInteractionEvent event)throws UserNotInVoiceChannelException {
       if(!event.getMember().getVoiceState().inAudioChannel()) throw new UserNotInVoiceChannelException();
 
-      PlayerManager.getINSTANCE().getMusicManager(event.getGuild()).schedule.endTrack();
+      PlayerManager.getInstance().getMusicManager(event.getGuild()).schedule.endTrack();
       event.getGuild().getAudioManager().closeAudioConnection();
 
    }

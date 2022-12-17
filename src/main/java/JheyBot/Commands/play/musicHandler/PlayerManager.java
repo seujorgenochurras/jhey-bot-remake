@@ -36,11 +36,14 @@ public class PlayerManager {
       });
    }
    public <T extends MessageChannel> void loadAndPlay (T textChannel, Guild guild, String trackURL){
+      //TODO this is easy cmon
       //Need guild as a parameter because i cant find a message channel that includes getGuild() and sendMessage() at the same time
       //if found PLS FIX
       final GuildMusicManager musicManager = getMusicManager(guild);
 
       this.audioPlayerManager.loadItemOrdered(musicManager, trackURL, new AudioLoadResultHandler() {
+         //TODO make embeds
+         //TODO do this with objects pls
          @Override
          public void trackLoaded(AudioTrack track) {
          musicManager.schedule.queue(track);
@@ -73,7 +76,7 @@ public class PlayerManager {
          }
       });
    }
-   public static PlayerManager getINSTANCE(){
+   public static PlayerManager getInstance(){
       if(INSTANCE == null){
          INSTANCE = new PlayerManager();
       }

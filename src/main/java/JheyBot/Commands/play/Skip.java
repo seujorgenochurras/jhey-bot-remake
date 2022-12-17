@@ -9,13 +9,13 @@ import net.dv8tion.jda.api.events.interaction.command.GenericCommandInteractionE
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
 
-@CommandType(type = CommandTypes.SLASH_COMMAND)
+@CommandType(type = CommandTypes.BOTH)
 public class Skip implements JSlashCommandInterface {
 
    public static void skipMusic(GenericCommandInteractionEvent event)throws UserNotInVoiceChannelException {
       if(event.getMember().getVoiceState().inAudioChannel()) throw new UserNotInVoiceChannelException();
 
-      PlayerManager.getINSTANCE().getMusicManager(event.getGuild()).schedule.nextTrack();
+      PlayerManager.getInstance().getMusicManager(event.getGuild()).schedule.nextTrack();
    }
    @Override
    public void callBack(SlashCommandInteractionEvent event) {

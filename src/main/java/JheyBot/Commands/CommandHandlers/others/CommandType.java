@@ -1,7 +1,5 @@
 package JheyBot.Commands.CommandHandlers.others;
 
-import JheyBot.Commands.CommandHandlers.others.CommandTypes;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

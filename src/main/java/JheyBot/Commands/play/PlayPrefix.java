@@ -6,11 +6,9 @@ import JheyBot.Commands.CommandHandlers.prefixHandlers.JPrefixCommandInterface;
 import JheyBot.Commands.play.musicHandler.PlayerManager;
 import JheyBot.Commands.play.musicHandler.UserNotInVoiceChannelException;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
-import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.managers.AudioManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static JheyBot.Commands.play.Play.isURL;
@@ -45,7 +43,7 @@ public class PlayPrefix implements JPrefixCommandInterface {
          query = new StringBuilder(new StringBuilder("ytsearch:" + query + " audio"));
       }
       try {
-         PlayerManager.getINSTANCE().loadAndPlay(event.getChannel(), event.getGuild(), query.toString());
+         PlayerManager.getInstance().loadAndPlay(event.getChannel(), event.getGuild(), query.toString());
       } catch (Exception e){
          event.getMessage().reply("Algo deu errado, pfv contate o dono `churrasco com seu jorge#2619`").queue();
          System.out.println(e.toString());
