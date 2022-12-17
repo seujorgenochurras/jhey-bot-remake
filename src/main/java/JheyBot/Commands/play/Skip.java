@@ -4,6 +4,7 @@ import JheyBot.Commands.CommandHandlers.others.CommandType;
 import JheyBot.Commands.CommandHandlers.others.CommandTypes;
 import JheyBot.Commands.CommandHandlers.slashHandlers.JSlashCommandInterface;
 import JheyBot.Commands.play.musicHandler.PlayerManager;
+import JheyBot.Commands.play.musicHandler.UserNotInVoiceChannelException;
 import net.dv8tion.jda.api.events.interaction.command.GenericCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
@@ -11,13 +12,19 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 @CommandType(type = CommandTypes.SLASH_COMMAND)
 public class Skip implements JSlashCommandInterface {
 
-   public static void skipMusic(GenericCommandInteractionEvent event) {
+   public static void skipMusic(GenericCommandInteractionEvent event)throws UserNotInVoiceChannelException {
+      if(event.getMember().getVoiceState().inAudioChannel()) throw new UserNotInVoiceChannelException();
+
       PlayerManager.getINSTANCE().getMusicManager(event.getGuild()).schedule.nextTrack();
    }
    @Override
    public void callBack(SlashCommandInteractionEvent event) {
       event.getInteraction().getChannel().sendTyping().queue();
+      try{
       skipMusic(event);
+      }catch (UserNotInVoiceChannelException e){
+         event.reply("Você não está em um canal").queue();
+      }
    }
 
    @Override

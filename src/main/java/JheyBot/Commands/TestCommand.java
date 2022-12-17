@@ -16,6 +16,11 @@ public class TestCommand implements JPrefixCommandInterface {
 
    @Override
    public void callBack(MessageReceivedEvent event) {
-    event.getMessage().reply("iametenrocudasai").queue();
+      event.getMessage().reply("iametenrocudasai").queue();
+      try {
+         event.getChannel().sendMessage("args " + getArgs(event)).queue();
+      }catch (NullPointerException e){
+         event.getChannel().sendMessage("SEU IMBAEICIL O NÃO PODE SER ").queue();
+      }
    }
 }

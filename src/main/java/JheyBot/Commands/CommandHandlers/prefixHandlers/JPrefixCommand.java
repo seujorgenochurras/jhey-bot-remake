@@ -25,7 +25,6 @@ public class JPrefixCommand extends ListenerAdapter {
           command.callBack(event);
           break;
        }
-      }
-
+     }
    }
 }

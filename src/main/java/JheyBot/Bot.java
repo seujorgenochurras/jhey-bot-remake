@@ -58,7 +58,7 @@ public class Bot{
          classes.forEach((Class<?> classe) -> {
                     Class<?>[] interfaces = classe.getInterfaces();
                     if (interfaces.length == 0) return;
-                     //todo find a way to fix this messy code
+                     //TODO find a way to fix this messy code
                     if (interfaces[0].equals(JSlashCommandInterface.class)) {
                        try {
                           JSlashCommandInterface classInstance = (JSlashCommandInterface) classe.getDeclaredConstructor().newInstance();

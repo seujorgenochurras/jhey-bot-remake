@@ -29,9 +29,16 @@ public class JSlashCommand extends ListenerAdapter {
       }
    }
 
+   //TODO FIX THIS REDUNDANT CODE
    @Override
    public void onGuildJoin(@NotNull GuildJoinEvent event) {
-
+      for(JSlashCommandInterface command : commands) {
+         if (command.getOptions() == null) {
+            event.getGuild().upsertCommand(command.getName(), command.getDescription()).queue();
+         } else {
+            event.getGuild().upsertCommand(command.getName(), command.getDescription()).addOptions(command.getOptions()).queue();
+         }
+      }
    }
 
    @Override

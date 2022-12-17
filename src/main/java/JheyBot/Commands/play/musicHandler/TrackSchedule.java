@@ -1,4 +1,4 @@
-//Credits to TR!STAN (i just copied his code)
+//Credits to TR!STAN (I just copied his code)
 package JheyBot.Commands.play.musicHandler;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
@@ -22,7 +22,6 @@ public class TrackSchedule extends AudioEventAdapter {
    public void queue (AudioTrack track){
       if(!this.audioPlayer.startTrack(track, true)) {
          this.queue.offer(track);
-
       }
    }
    public void nextTrack(){
