@@ -3,6 +3,7 @@ package JheyBot.Commands.CommandHandlers.slashHandlers;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,24 +20,12 @@ public class JSlashCommand extends ListenerAdapter {
    }
 
    @Override
-   public void onGuildReady(@NotNull GuildReadyEvent event) {
+   public void onReady(@NotNull ReadyEvent event) {
       for(JSlashCommandInterface command : commands) {
          if (command.getOptions() == null) {
-            event.getGuild().upsertCommand(command.getName(), command.getDescription()).queue();
+            event.getJDA().upsertCommand(command.getName(), command.getDescription()).queue();
          } else {
-            event.getGuild().upsertCommand(command.getName(), command.getDescription()).addOptions(command.getOptions()).queue();
-         }
-      }
-   }
-
-   //TODO FIX THIS REDUNDANT CODE
-   @Override
-   public void onGuildJoin(@NotNull GuildJoinEvent event) {
-      for(JSlashCommandInterface command : commands) {
-         if (command.getOptions() == null) {
-            event.getGuild().upsertCommand(command.getName(), command.getDescription()).queue();
-         } else {
-            event.getGuild().upsertCommand(command.getName(), command.getDescription()).addOptions(command.getOptions()).queue();
+            event.getJDA().upsertCommand(command.getName(), command.getDescription()).addOptions(command.getOptions()).queue();
          }
       }
    }
