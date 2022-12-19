@@ -98,8 +98,5 @@ public class Bot{
       }catch (LoginException e){
          System.out.println("TOKEN INVALID LOGIN EXCEPTION!!!");
       }
-
-
    }
-
 }
