@@ -1,11 +1,8 @@
 package JheyBot;
 
 import JheyBot.Commands.CommandHandlers.both.JBothHandler;
-import JheyBot.Commands.CommandHandlers.both.JBothHandlerInterface;
 import JheyBot.Commands.CommandHandlers.others.CommandType;
 import JheyBot.Commands.CommandHandlers.prefixHandlers.JPrefixCommand;
-import JheyBot.Commands.CommandHandlers.prefixHandlers.JPrefixCommandInterface;
-import JheyBot.Commands.CommandHandlers.slashHandlers.JSlashCommandInterface;
 import JheyBot.Commands.CommandHandlers.slashHandlers.JSlashCommand;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -62,37 +59,16 @@ public class Bot{
          classes.forEach((Class<?> classe) -> {
                     Class<?>[] interfaces = classe.getInterfaces();
                     if (interfaces.length == 0) return;
-                     //TODO find a way to fix this messy code
-                     //BRUH
-                    if (interfaces[0].equals(JSlashCommandInterface.class)) {
-                       try {
-                          JSlashCommandInterface classInstance = (JSlashCommandInterface) classe.getDeclaredConstructor().newInstance();
-                          Method method = classe.getMethod("build");
-                          method.invoke(classInstance);
-                       } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException |
-                                InstantiationException e) {
-                          throw new RuntimeException(e);
-                       }
-                    } else if (interfaces[0].equals(JPrefixCommandInterface.class)) {
-                       try {
-                          JPrefixCommandInterface classInstance = (JPrefixCommandInterface) classe.getDeclaredConstructor().newInstance();
-                          Method method = classe.getMethod("build");
-                          method.invoke(classInstance);
-                       } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException |
-                                InstantiationException e) {
-                          throw new RuntimeException(e);
-                       }
-                    } else if(interfaces[0].equals(JBothHandlerInterface.class)){
-                       try {
-                          JBothHandlerInterface classInstance = (JBothHandlerInterface) classe.getDeclaredConstructor().newInstance();
-                          Method method = classe.getMethod("build");
-                          method.invoke(classInstance);
-                       } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException |
-                                InstantiationException e) {
-                          throw new RuntimeException(e);
-                       }
-                    }
-                 });
+            try{
+               //is this bad?
+               Object classInstance = classe.getDeclaredConstructor().newInstance();
+             Method method = classe.getMethod("build");
+             method.invoke(classInstance);
+            } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
+                     IllegalAccessException e) {
+               throw new RuntimeException(e);
+            }
+         });
       //Loging in
       try {
          Bot bot = new Bot();

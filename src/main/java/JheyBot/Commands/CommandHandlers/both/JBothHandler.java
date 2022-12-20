@@ -1,8 +1,6 @@
 package JheyBot.Commands.CommandHandlers.both;
 
 import JheyBot.Bot;
-import JheyBot.Commands.CommandHandlers.prefixHandlers.JPrefixCommandInterface;
-import JheyBot.Commands.CommandHandlers.slashHandlers.JSlashCommandInterface;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;

@@ -46,9 +46,7 @@ public class Play implements JBothHandlerInterface {
 
    public void join(JEventObject event) throws UserNotInVoiceChannelException {
       boolean voiceState = event.getMember().getVoiceState().inAudioChannel();
-
       if(!voiceState) throw new UserNotInVoiceChannelException("User is not on a voice channel");
-
       AudioChannel userChannel = event.getMember().getVoiceState().getChannel();
       AudioManager audioManager = event.getGuild().getAudioManager();
       audioManager.openAudioConnection(userChannel);
