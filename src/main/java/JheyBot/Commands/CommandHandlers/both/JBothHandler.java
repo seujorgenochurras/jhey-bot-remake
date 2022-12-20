@@ -1,6 +1,7 @@
 package JheyBot.Commands.CommandHandlers.both;
 
 import JheyBot.Bot;
+import JheyBot.Commands.CommandHandlers.prefixHandlers.JPrefixCommandInterface;
 import JheyBot.Commands.CommandHandlers.slashHandlers.JSlashCommandInterface;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -20,7 +21,7 @@ public class JBothHandler extends ListenerAdapter {
 
    @Override
    public void onReady(@NotNull ReadyEvent event) {
-      for(JSlashCommandInterface command : commands) {
+      for(JBothHandlerInterface command : commands) {
          if (command.getOptions() == null) {
             event.getJDA().upsertCommand(command.getName(), command.getDescription()).queue();
          } else {
@@ -29,12 +30,15 @@ public class JBothHandler extends ListenerAdapter {
       }
    }
 
+      public final String prefix = Bot.prefix;
    @Override
    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-      String prefix = Bot.prefix;
       for(JBothHandlerInterface command : commands){
-         if(event.getMessage().getContentRaw().startsWith(prefix + command.getName())){
-            command.callBack(event);
+         String firstArg = event.getMessage().getContentRaw().split(" ")[0];
+         if(firstArg.equals(prefix + command.getName())){
+          JEventObject eventObject = new JEventObject(event);
+            System.out.println("yes!");
+            command.callBack(eventObject);
             break;
          }
       }
@@ -44,7 +48,8 @@ public class JBothHandler extends ListenerAdapter {
    public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
       for(JBothHandlerInterface command : commands){
          if(event.getName().equals(command.getName())){
-            command.callBack(event);
+            JEventObject eventObject = new JEventObject(event);
+            command.callBack(eventObject);
             break;
          }
       }
