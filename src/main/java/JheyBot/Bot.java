@@ -19,6 +19,7 @@ import org.reflections.scanners.Scanners;
 import javax.security.auth.login.LoginException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Set;
 
 public class Bot{
@@ -46,7 +47,7 @@ public class Bot{
       //Register Listeners
       shardManager.addEventListener(new JSlashCommand());
       shardManager.addEventListener(new JPrefixCommand());
-     // shardManager.addEventListener(new JBothHandler());
+      shardManager.addEventListener(new JBothHandler());
    }
 
 
@@ -83,7 +84,7 @@ public class Bot{
                        }
                     } else if(interfaces[0].equals(JBothHandlerInterface.class)){
                        try {
-                          JBothHandler classInstance = (JBothHandler) classe.getDeclaredConstructor().newInstance();
+                          JBothHandlerInterface classInstance = (JBothHandlerInterface) classe.getDeclaredConstructor().newInstance();
                           Method method = classe.getMethod("build");
                           method.invoke(classInstance);
                        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException |

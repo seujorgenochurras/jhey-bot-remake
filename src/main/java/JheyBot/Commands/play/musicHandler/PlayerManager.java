@@ -10,6 +10,8 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +38,11 @@ public class PlayerManager {
       });
    }
    public <T extends MessageChannel> void loadAndPlay (T textChannel, Guild guild, String trackURL){
+      System.out.println("Musica adicionada no servidor " + guild.getName());
+      SimpleDateFormat date = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+      Date date1 = new Date();
+      System.out.println("ÁS : " + date.format(date1));
+
       //TODO this is easy cmon
       //Need guild as a parameter because i cant find a message channel that includes getGuild() and sendMessage() at the same time
       //if found PLS FIX
@@ -47,10 +54,10 @@ public class PlayerManager {
          @Override
          public void trackLoaded(AudioTrack track) {
          musicManager.schedule.queue(track);
-         textChannel.sendMessage(" Colocando Musica na Fila `**"
+         textChannel.sendMessage("Colocando Musica na Fila"
                  + track.getInfo().title
-                 + "**Por**"
-                 + track.getInfo().author + "`**").queue();
+                 + "Por"
+                 + track.getInfo().author).queue();
          }
 
          @Override
@@ -58,10 +65,10 @@ public class PlayerManager {
                final List<AudioTrack> tracks = playlist.getTracks();
                if(!tracks.isEmpty()){
                   musicManager.schedule.queue(tracks.get(0));
-                  textChannel.sendMessage(" Colocando Musica na Fila `**"
+                  textChannel.sendMessage(" Colocando Musica na Fila"
                           + tracks.get(0).getInfo().title
-                          + "**Por**"
-                          + tracks.get(0).getInfo().author + "`**").queue();
+                          + "Por"
+                          + tracks.get(0).getInfo().author).queue();
                }
          }
 
@@ -72,7 +79,7 @@ public class PlayerManager {
 
          @Override
          public void loadFailed(FriendlyException exception) {
-            textChannel.sendMessage("Alguma coisa deu errado exception : " + exception.toString()).queue();
+            textChannel.sendMessage("Alguma coisa deu errado, pfv contate o dono ``churrasco com seu jorge#2619``").queue();
          }
       });
    }
