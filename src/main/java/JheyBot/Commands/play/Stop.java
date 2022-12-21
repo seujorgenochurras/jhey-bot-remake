@@ -3,6 +3,7 @@ package JheyBot.Commands.play;
 import JheyBot.Commands.CommandHandlers.others.CommandType;
 import JheyBot.Commands.CommandHandlers.others.CommandTypes;
 import JheyBot.Commands.CommandHandlers.slashHandlers.JSlashCommandInterface;
+import JheyBot.Commands.play.musicHandler.MessageEmbeds;
 import JheyBot.Commands.play.musicHandler.PlayerManager;
 import JheyBot.Commands.play.musicHandler.UserNotInVoiceChannelException;
 import net.dv8tion.jda.api.events.interaction.command.GenericCommandInteractionEvent;
@@ -24,7 +25,7 @@ public class Stop implements JSlashCommandInterface {
       try {
       stopMusic(event);
       }catch (UserNotInVoiceChannelException e){
-         event.reply("VOCE NEM TA EM UM CANAL KRL").queue();
+         event.getChannel().sendMessageEmbeds(MessageEmbeds.getErrorEmbed("Você não está em um canal")).queue();
       }
    }
    @Override

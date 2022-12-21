@@ -1,5 +1,6 @@
 package JheyBot.Commands.play.musicHandler;
 
+import JheyBot.Commands.CommandHandlers.both.JEventObject;
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
@@ -7,9 +8,13 @@ import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
+import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -37,39 +42,38 @@ public class PlayerManager {
          return guildMusicManager;
       });
    }
-   public <T extends MessageChannel> void loadAndPlay (T textChannel, Guild guild, String trackURL){
+   private int trackSize = 0;
+   public void loadAndPlay (JEventObject eventObject, String trackURL){
+      //Local variables
+      final MessageChannel textChannel = eventObject.getChannel().asGuildMessageChannel();
+      final Guild guild = eventObject.getGuild();
+      final GuildMusicManager musicManager = getMusicManager(guild);
+
+      //Remove this later
       System.out.println("Musica adicionada no servidor " + guild.getName());
       SimpleDateFormat date = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
       Date date1 = new Date();
-      System.out.println("ÁS : " + date.format(date1));
+      System.out.println("Ás : " + date.format(date1));
 
-      //TODO this is easy cmon
-      //Need guild as a parameter because i cant find a message channel that includes getGuild() and sendMessage() at the same time
-      //if found PLS FIX
-      final GuildMusicManager musicManager = getMusicManager(guild);
 
       this.audioPlayerManager.loadItemOrdered(musicManager, trackURL, new AudioLoadResultHandler() {
-         //TODO make embeds
-         //TODO do this with objects pls
          @Override
          public void trackLoaded(AudioTrack track) {
-         musicManager.schedule.queue(track);
-         textChannel.sendMessage("Colocando Musica na Fila"
-                 + track.getInfo().title
-                 + "Por"
-                 + track.getInfo().author).queue();
+            trackSize++;
+            musicManager.schedule.queue(track);
+            textChannel.sendMessageEmbeds(new MusicEmbed(track, trackSize, eventObject).getMessageEmbed()).queue();
          }
 
          @Override
          public void playlistLoaded(AudioPlaylist playlist) {
-               final List<AudioTrack> tracks = playlist.getTracks();
-               if(!tracks.isEmpty()){
-                  musicManager.schedule.queue(tracks.get(0));
-                  textChannel.sendMessage(" Colocando Musica na Fila"
-                          + tracks.get(0).getInfo().title
-                          + "Por"
-                          + tracks.get(0).getInfo().author).queue();
-               }
+            //Not an actual playlist, this is most likely to be an URL
+            //TODO Playlist probably doesn't work (fix)
+            trackSize++;
+            List<AudioTrack> tracks = playlist.getTracks();
+            if(!tracks.isEmpty()){
+               musicManager.schedule.queue(tracks.get(0));
+               textChannel.sendMessageEmbeds(new MusicEmbed(tracks, trackSize, eventObject).getMessageEmbed()).queue();
+            }
          }
 
          @Override
@@ -83,6 +87,20 @@ public class PlayerManager {
          }
       });
    }
+
+   /**
+    *  Converts milliseconds into a string mm:ss
+    *
+    * @param millis milliseconds
+    * **/
+   private static String getTime(long millis){
+      String result = "";
+      long minutes = (millis / 1000)  / 60;
+      int seconds = (int)((millis / 1000) % 60);
+      result += minutes + ":";
+      result += (seconds < 10) ? "0" + seconds : seconds;
+      return result;
+   }
    public static PlayerManager getInstance(){
       if(INSTANCE == null){
          INSTANCE = new PlayerManager();
@@ -90,4 +108,36 @@ public class PlayerManager {
       return INSTANCE;
    }
 
+   private static class MusicEmbed{
+      //TODO vai tocar em: (tempo até tocar )
+
+      //arrumar esse código tmb
+      private final MessageEmbed musicEmbed;
+      MusicEmbed(@NotNull AudioTrack track, int size, @NotNull JEventObject eventObject){
+          musicEmbed = new EmbedBuilder()
+                    .setTitle("Colocando Música \n" + track.getInfo().title, track.getInfo().uri)
+                    .setColor(new Color( 0, 255, 55))
+                     .addBlankField(false)
+                    .addField(new MessageEmbed.Field("Duração: ", getTime(track.getDuration()) , true ))
+                    .addField(new MessageEmbed.Field("Posição na fila", Integer.toString(size), true))
+                    .setThumbnail("https://img.youtube.com/vi/" + track.getIdentifier() + "/mqdefault.jpg") //video thumb
+                    .setFooter(eventObject.getMember().getUser().getName(), eventObject.getUser().getAvatar().getUrl())
+                    .build();
+         }
+         MusicEmbed(@NotNull List<AudioTrack> tracks, int size, @NotNull JEventObject eventObject){
+         int firstVideo = size - 1;
+          musicEmbed = new EmbedBuilder()
+                   .setTitle("Colocando Música \n " + tracks.get(firstVideo).getInfo().title, tracks.get(firstVideo).getInfo().uri)
+                   .setColor(new Color( 0, 255, 55))
+                  .addBlankField(false)
+                  .addField(new MessageEmbed.Field("Duração: ", getTime(tracks.get(firstVideo).getDuration()), true ))
+                   .addField(new MessageEmbed.Field("Posição na fila", Integer.toString(size), true))
+                   .setThumbnail("https://img.youtube.com/vi/" + tracks.get(firstVideo).getIdentifier() + "/mqdefault.jpg") //video thumb
+                   .setFooter(eventObject.getMember().getUser().getName(), eventObject.getUser().getAvatar().getUrl())
+                   .build();
+      }
+      public MessageEmbed getMessageEmbed(){
+         return this.musicEmbed;
+      }
+   }
 }

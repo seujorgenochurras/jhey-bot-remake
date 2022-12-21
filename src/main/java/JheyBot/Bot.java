@@ -56,7 +56,10 @@ public class Bot {
    public static void main(String[] args) {
       //Registering all commands
       try {
+         //Obviously bot is not a command lol
          Bot bot = new Bot();
+
+
          Reflections reflections = new Reflections("JheyBot.Commands", Scanners.values());
          Set<Class<?>> classes = reflections.getTypesAnnotatedWith(CommandType.class);
          for (Class<?> classe : classes) {
@@ -64,6 +67,7 @@ public class Bot {
             if (interfaces.length == 0) continue;
             try {
                //is this bad?
+               //I really don't like the Object type here
                Object classInstance = classe.getDeclaredConstructor().newInstance();
                Method method = classe.getMethod("build");
                method.invoke(classInstance);
