@@ -36,10 +36,12 @@ public class JBothHandler extends ListenerAdapter {
          String firstArg = event.getMessage().getContentRaw().split(" ")[0];
          boolean tmp = false;
          //TODO make this names array be native to the interface
-         for (String name : command.getNames()) {
-            if (firstArg.equals(prefix + name)) {
-               tmp = true;
-               break;
+         if(command.getNames() != null) {
+            for (String name : command.getNames()) {
+               if (firstArg.equals(prefix + name)) {
+                  tmp = true;
+                  break;
+               }
             }
          }
             if(!tmp && firstArg.equals(prefix + command.getName())){

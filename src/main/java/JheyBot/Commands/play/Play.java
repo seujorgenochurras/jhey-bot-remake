@@ -5,7 +5,7 @@ import JheyBot.Commands.CommandHandlers.both.JEventObject;
 import JheyBot.Commands.CommandHandlers.both.JEventTypes;
 import JheyBot.Commands.CommandHandlers.others.CommandType;
 import JheyBot.Commands.CommandHandlers.others.CommandTypes;
-import JheyBot.Commands.play.musicHandler.MessageEmbeds;
+import JheyBot.Commands.Embeds.MessageEmbeds;
 import JheyBot.Commands.play.musicHandler.PlayerManager;
 import JheyBot.Commands.play.musicHandler.UserNotInVoiceChannelException;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
