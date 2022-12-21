@@ -10,7 +10,6 @@ import java.util.List;
 public interface JBothHandlerInterface extends CommandInterface {
    String getDescription();
 
-
    default List<String> getArgs(JEventObject event){
       List<String> args = new ArrayList<>(List.of(event.getMessage().getContentRaw().split(" ")));
 

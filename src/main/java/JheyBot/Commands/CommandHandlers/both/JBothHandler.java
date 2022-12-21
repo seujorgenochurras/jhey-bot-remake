@@ -8,9 +8,10 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-//TODO make this better pls (probably with generics idk)
+
 public class JBothHandler extends ListenerAdapter {
    public static List<JBothHandlerInterface> commands = new ArrayList<>();
    public static void add(JBothHandlerInterface command){
@@ -33,14 +34,24 @@ public class JBothHandler extends ListenerAdapter {
    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
       for(JBothHandlerInterface command : commands){
          String firstArg = event.getMessage().getContentRaw().split(" ")[0];
-         if(firstArg.equals(prefix + command.getName())){
-          JEventObject eventObject = new JEventObject(event);
-            System.out.println("yes!");
-            command.callBack(eventObject);
-            break;
+         boolean tmp = false;
+         //TODO make this names array be native to the interface
+         for (String name : command.getNames()) {
+            if (firstArg.equals(prefix + name)) {
+               tmp = true;
+               break;
+            }
+         }
+            if(!tmp && firstArg.equals(prefix + command.getName())){
+               tmp = true;
+            }
+            if(tmp){
+               JEventObject eventObject = new JEventObject(event);
+               command.callBack(eventObject);
+            }
          }
       }
-   }
+
 
    @Override
    public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {

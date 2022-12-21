@@ -16,14 +16,14 @@ import org.reflections.scanners.Scanners;
 import javax.security.auth.login.LoginException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Set;
 
-public class Bot{
+public class Bot {
 
    public static ShardManager shardManager;
    public static Dotenv dotenv;
    public static String prefix = "";
+
    public Bot() throws LoginException {
 
       //Getting Token
@@ -41,6 +41,7 @@ public class Bot{
 
 
       shardManager = builder.build();
+
       //Register Listeners
       shardManager.addEventListener(new JSlashCommand());
       shardManager.addEventListener(new JPrefixCommand());
@@ -48,32 +49,31 @@ public class Bot{
    }
 
 
-   public ShardManager shardManager(){
+   public ShardManager shardManager() {
       return shardManager;
    }
 
    public static void main(String[] args) {
       //Registering all commands
+      try {
+         Bot bot = new Bot();
          Reflections reflections = new Reflections("JheyBot.Commands", Scanners.values());
          Set<Class<?>> classes = reflections.getTypesAnnotatedWith(CommandType.class);
-         classes.forEach((Class<?> classe) -> {
-                    Class<?>[] interfaces = classe.getInterfaces();
-                    if (interfaces.length == 0) return;
-            try{
+         for (Class<?> classe : classes) {
+            Class<?>[] interfaces = classe.getInterfaces();
+            if (interfaces.length == 0) continue;
+            try {
                //is this bad?
                Object classInstance = classe.getDeclaredConstructor().newInstance();
-             Method method = classe.getMethod("build");
-             method.invoke(classInstance);
+               Method method = classe.getMethod("build");
+               method.invoke(classInstance);
             } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
                      IllegalAccessException e) {
                throw new RuntimeException(e);
             }
-         });
-      //Loging in
-      try {
-         Bot bot = new Bot();
-      }catch (LoginException e){
-         System.out.println("TOKEN INVALID LOGIN EXCEPTION!!!");
+         }
+      } catch (LoginException e) {
+         throw new RuntimeException(e);
       }
    }
 }

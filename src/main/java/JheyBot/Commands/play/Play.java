@@ -26,10 +26,16 @@ public class Play implements JBothHandlerInterface {
       //I really dont like the StringBuilder here
       StringBuilder query = new StringBuilder();
       if(event.getType().equals(JEventTypes.MessageReceivedEvent)){
+        try {
          List<String> args = getArgs(event);
-         for(String arg : args){
-            query.append(arg);
-         }
+           for(String arg : args){
+              query.append(arg + " ");
+           }
+           System.out.println(query);
+        }catch (NullPointerException e){
+           event.reply("QUE MUSICA?");
+           return;
+        }
       } else {
          query = new StringBuilder(event.getOption("query").getAsString());
       }
@@ -84,5 +90,10 @@ public class Play implements JBothHandlerInterface {
       List<OptionData> optionData = new ArrayList<>();
       optionData.add(new OptionData(OptionType.STRING, "query", "Nome/link da musica").setRequired(true));
       return optionData;
+   }
+
+   @Override
+   public String[] getNames() {
+      return new String[]{"p", "Play", "P", "PLAY"};
    }
 }
