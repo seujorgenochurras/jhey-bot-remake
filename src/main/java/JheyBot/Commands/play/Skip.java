@@ -35,7 +35,6 @@ public class Skip implements JBothHandlerInterface {
 
    @Override
    public void callBack(JEventObject event) {
-      //TODO if bot is not on channel reply error
       try{
          skipMusic(event);
       }catch (UserNotInVoiceChannelException e){

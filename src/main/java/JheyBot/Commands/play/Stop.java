@@ -35,7 +35,6 @@ public class Stop implements JBothHandlerInterface {
 
    @Override
    public void callBack(JEventObject event) {
-      //TODO if bot is not on channel reply error
       try {
          stopMusic(event);
       }catch (UserNotInVoiceChannelException e){

@@ -9,7 +9,6 @@ import JheyBot.Commands.Embeds.MessageEmbeds;
 import JheyBot.Commands.play.musicHandler.PlayerManager;
 import JheyBot.Commands.play.musicHandler.UserNotInVoiceChannelException;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.managers.AudioManager;
@@ -19,7 +18,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+//TODO make this work with spotify
 @CommandType(type = CommandTypes.BOTH)
 public class Play implements JBothHandlerInterface {
 

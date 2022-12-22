@@ -10,7 +10,6 @@ import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import org.jetbrains.annotations.NotNull;
@@ -76,7 +75,6 @@ public class PlayerManager {
                textChannel.sendMessageEmbeds(new MusicEmbed(tracks, trackSize, eventObject).getMessageEmbed()).queue();
             }
          }
-//occur
          @Override
          public void noMatches() {
             textChannel.sendMessage("Não encontrei a musica desculpe ;-;").queue();
