@@ -10,6 +10,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import org.jetbrains.annotations.NotNull;
@@ -42,7 +43,7 @@ public class PlayerManager {
          return guildMusicManager;
       });
    }
-   private int trackSize = 0;
+   public int trackSize = 0;
    public void loadAndPlay (JEventObject eventObject, String trackURL){
       //Local variables
       final MessageChannel textChannel = eventObject.getChannel().asGuildMessageChannel();
@@ -75,7 +76,7 @@ public class PlayerManager {
                textChannel.sendMessageEmbeds(new MusicEmbed(tracks, trackSize, eventObject).getMessageEmbed()).queue();
             }
          }
-
+//occur
          @Override
          public void noMatches() {
             textChannel.sendMessage("Não encontrei a musica desculpe ;-;").queue();
@@ -110,34 +111,27 @@ public class PlayerManager {
 
    private static class MusicEmbed{
       //TODO vai tocar em: (tempo até tocar )
-
-      //arrumar esse código tmb
       private final MessageEmbed musicEmbed;
       MusicEmbed(@NotNull AudioTrack track, int size, @NotNull JEventObject eventObject){
-          musicEmbed = new EmbedBuilder()
-                    .setTitle("Colocando Música \n" + track.getInfo().title, track.getInfo().uri)
-                    .setColor(new Color( 0, 255, 55))
-                     .addBlankField(false)
-                    .addField(new MessageEmbed.Field("Duração: ", getTime(track.getDuration()) , true ))
-                    .addField(new MessageEmbed.Field("Posição na fila", Integer.toString(size), true))
-                    .setThumbnail("https://img.youtube.com/vi/" + track.getIdentifier() + "/mqdefault.jpg") //video thumb
-                    .setFooter(eventObject.getMember().getUser().getName(), eventObject.getUser().getAvatar().getUrl())
-                    .build();
-         }
+         musicEmbed = buildEmbed(track, size, eventObject);
+      }
          MusicEmbed(@NotNull List<AudioTrack> tracks, int size, @NotNull JEventObject eventObject){
-         int firstVideo = size - 1;
-          musicEmbed = new EmbedBuilder()
-                   .setTitle("Colocando Música \n " + tracks.get(firstVideo).getInfo().title, tracks.get(firstVideo).getInfo().uri)
-                   .setColor(new Color( 0, 255, 55))
-                  .addBlankField(false)
-                  .addField(new MessageEmbed.Field("Duração: ", getTime(tracks.get(firstVideo).getDuration()), true ))
-                   .addField(new MessageEmbed.Field("Posição na fila", Integer.toString(size), true))
-                   .setThumbnail("https://img.youtube.com/vi/" + tracks.get(firstVideo).getIdentifier() + "/mqdefault.jpg") //video thumb
-                   .setFooter(eventObject.getMember().getUser().getName(), eventObject.getUser().getAvatar().getUrl())
-                   .build();
+        musicEmbed = buildEmbed(tracks.get(size-1), size, eventObject);
       }
       public MessageEmbed getMessageEmbed(){
          return this.musicEmbed;
       }
+      private MessageEmbed buildEmbed(AudioTrack track, int size, JEventObject eventObject){
+       return new EmbedBuilder()
+                 .setTitle("Colocando Música \n" + track.getInfo().title, track.getInfo().uri)
+                 .setColor(new Color( 0, 255, 55))
+                 .addBlankField(false)
+                 .addField(new MessageEmbed.Field("Duração: ", getTime(track.getDuration()) , true ))
+                 .addField(new MessageEmbed.Field("Posição na fila", Integer.toString(size), true))
+                 .setThumbnail("https://img.youtube.com/vi/" + track.getIdentifier() + "/mqdefault.jpg") //video thumb
+                 .setFooter(eventObject.getMember().getUser().getName(), eventObject.getUser().getAvatar().getUrl())
+                 .build();
+      }
+
    }
 }

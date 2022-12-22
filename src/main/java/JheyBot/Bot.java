@@ -36,6 +36,7 @@ public class Bot {
       builder.enableIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS));
 
       //:TROLLFACE:
+      //TODO make this random
       builder.setActivity(Activity.watching("SEU PAI DE CALCINHA"));
       builder.setStatus(OnlineStatus.ONLINE);
 
