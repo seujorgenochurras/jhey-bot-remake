@@ -27,31 +27,32 @@ public class JBothHandler extends ListenerAdapter {
          }
       }
    }
-
       public final String prefix = Bot.prefix;
    @Override
    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-      for(JBothHandlerInterface command : commands){
-         String firstArg = event.getMessage().getContentRaw().split(" ")[0];
-         boolean tmp = false;
-         //TODO make this names array be native to the interface
-         if(command.getNames() != null) {
-            for (String name : command.getNames()) {
-               if (firstArg.equals(prefix + name)) {
-                  tmp = true;
-                  break;
+     String firstArg = event.getMessage().getContentRaw().split(" ")[0];
+     JBothHandlerInterface matchingCommand = findMatchingCommand(firstArg);
+     if(matchingCommand != null){
+        JEventObject eventObject = new JEventObject(event);
+        matchingCommand.callBack(eventObject);
+     }
+
+   }
+      private JBothHandlerInterface findMatchingCommand(String firstArg){
+         for(JBothHandlerInterface command: commands){
+            if(command.getNames() != null){
+               for(String name : command.getNames()){
+                  if(name.equals(prefix + firstArg)){
+                     return command;
+                  }
                }
+            } else if (command.getName().equals(prefix + firstArg)) {
+               return command;
             }
          }
-            if(!tmp && firstArg.equals(prefix + command.getName())){
-               tmp = true;
-            }
-            if(tmp){
-               JEventObject eventObject = new JEventObject(event);
-               command.callBack(eventObject);
-            }
-         }
+            return null;
       }
+
 
 
    @Override
