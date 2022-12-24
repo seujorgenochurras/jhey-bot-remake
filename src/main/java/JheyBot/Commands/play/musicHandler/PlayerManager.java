@@ -1,5 +1,6 @@
 package JheyBot.Commands.play.musicHandler;
 
+import JheyBot.Commands.CommandHandlers.both.JBothHandler;
 import JheyBot.Commands.CommandHandlers.both.JEventObject;
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
@@ -37,7 +38,7 @@ public class PlayerManager {
    public GuildMusicManager getMusicManager(Guild guild){
       return this.musicManagers.computeIfAbsent(guild.getIdLong(), (guildId) ->{
 
-         final GuildMusicManager guildMusicManager = new GuildMusicManager( this.audioPlayerManager);
+         final GuildMusicManager guildMusicManager = new GuildMusicManager(this.audioPlayerManager, guild);
          guild.getAudioManager().setSendingHandler(guildMusicManager.sendHandler());
          return guildMusicManager;
       });
@@ -48,7 +49,6 @@ public class PlayerManager {
       final MessageChannel textChannel = eventObject.getChannel().asGuildMessageChannel();
       final Guild guild = eventObject.getGuild();
       final GuildMusicManager musicManager = getMusicManager(guild);
-
       //Remove this later
       System.out.println("Musica adicionada no servidor " + guild.getName());
       SimpleDateFormat date = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
@@ -62,6 +62,8 @@ public class PlayerManager {
             trackSize++;
             musicManager.schedule.queue(track);
             textChannel.sendMessageEmbeds(new MusicEmbed(track, trackSize, eventObject).getMessageEmbed()).queue();
+            JBothHandler.afkTime.stop();
+
          }
 
          @Override
@@ -74,6 +76,8 @@ public class PlayerManager {
                musicManager.schedule.queue(tracks.get(0));
                textChannel.sendMessageEmbeds(new MusicEmbed(tracks, trackSize, eventObject).getMessageEmbed()).queue();
             }
+            JBothHandler.afkTime.stop();
+
          }
          @Override
          public void noMatches() {
@@ -92,7 +96,7 @@ public class PlayerManager {
     *
     * @param millis milliseconds
     * **/
-   private static String getTime(long millis){
+   private static String getTime(long millis)   {
       String result = "";
       long minutes = (millis / 1000)  / 60;
       int seconds = (int)((millis / 1000) % 60);

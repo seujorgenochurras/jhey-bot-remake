@@ -1,68 +1,78 @@
 package JheyBot.Commands.CommandHandlers.both;
 
 import JheyBot.Bot;
+import JheyBot.Commands.play.musicHandler.others.BotDisconnectedTime;
+import com.iwebpp.crypto.TweetNaclFast;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.ArrayList;
 
 
 public class JBothHandler extends ListenerAdapter {
-   public static List<JBothHandlerInterface> commands = new ArrayList<>();
-   public static void add(JBothHandlerInterface command){
+
+
+   //Time that bot can stay on channel without any music on
+   //TODO make time changeable on runtime
+   public static BotDisconnectedTime afkTime = new BotDisconnectedTime(300);
+   public static void addCommand(JBothHandlerInterface command){
       commands.add(command);
    }
-
+   private final String prefix = Bot.prefix;
+   public static HashSet<JBothHandlerInterface> commands = new HashSet<>();
    @Override
    public void onReady(@NotNull ReadyEvent event) {
-      for(JBothHandlerInterface command : commands) {
-         if (command.getOptions() == null) {
-            event.getJDA().upsertCommand(command.getName(), command.getDescription()).queue();
-         } else {
+      commands.forEach((command)->{
+         if(command.getOptions() != null){
             event.getJDA().upsertCommand(command.getName(), command.getDescription()).addOptions(command.getOptions()).queue();
+         } else{
+           event.getJDA().upsertCommand(command.getName(), command.getDescription()).queue();
          }
-      }
+      });
    }
-      public final String prefix = Bot.prefix;
+
    @Override
    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-     String firstArg = event.getMessage().getContentRaw().split(" ")[0];
-     JBothHandlerInterface matchingCommand = findMatchingCommand(firstArg);
-     if(matchingCommand != null){
-        JEventObject eventObject = new JEventObject(event);
-        matchingCommand.callBack(eventObject);
-     }
+      String firstArg = event.getMessage().getContentRaw().split(" ")[0];
+      JBothHandlerInterface matchingCommand = findMatchingCommand(firstArg);
+      if(matchingCommand != null){
+         JEventObject eventObject = new JEventObject(event);
+         matchingCommand.callBack(eventObject);
+      }
 
    }
-      private JBothHandlerInterface findMatchingCommand(String firstArg){
-         for(JBothHandlerInterface command: commands){
-            if(command.getNames() != null){
-               for(String name : command.getNames()){
-                  if(name.equals(prefix + firstArg)){
+   private JBothHandlerInterface findMatchingCommand(String firstArg) {
+      //todo learn streams
+      for (JBothHandlerInterface command : commands) {
+         if (!firstArg.startsWith(prefix)) {
+            if (firstArg.equals(command.getName())) {
+               return command;
+            }
+         } else if ((prefix + command.getName()).equals(firstArg)) return command;
+          else if (command.getNames() != null) {
+               for (String name : command.getNames()) {
+                  if ((prefix + name).equals(firstArg)) {
                      return command;
                   }
                }
-            } else if (command.getName().equals(prefix + firstArg)) {
-               return command;
             }
          }
-            return null;
+      return null;
       }
-
 
 
    @Override
    public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
-      for(JBothHandlerInterface command : commands){
-         if(event.getName().equals(command.getName())){
-            JEventObject eventObject = new JEventObject(event);
-            command.callBack(eventObject);
-            break;
-         }
+      JBothHandlerInterface matchingCommand = findMatchingCommand(event.getName());
+      if(matchingCommand != null){
+         JEventObject eventObject = new JEventObject(event);
+         matchingCommand.callBack(eventObject);
       }
    }
 }
+

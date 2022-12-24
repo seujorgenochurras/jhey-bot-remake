@@ -1,5 +1,6 @@
 package JheyBot.Commands.play;
 
+import JheyBot.Commands.CommandHandlers.both.JBothHandler;
 import JheyBot.Commands.CommandHandlers.both.JBothHandlerInterface;
 import JheyBot.Commands.CommandHandlers.both.JEventObject;
 import JheyBot.Commands.CommandHandlers.others.CommandType;
@@ -16,7 +17,15 @@ public class Skip implements JBothHandlerInterface {
       //If user is not on a voice channel
       UserNotInVoiceChannelException.getUserVoiceState(event.getMember());
       BotNotInVoiceChannelException.getOccur(event.getGuild());
-
+      // todo fix this monkey code
+      if(PlayerManager.getInstance().getMusicManager(event.getGuild()).schedule.audioPlayer.getPlayingTrack() == null){
+          event.getChannel().sendMessageEmbeds(MessageEmbeds.getErrorEmbed("Não tem nada pra tocar ")).queue();
+         return;
+      }
+         if (PlayerManager.getInstance().getMusicManager(event.getGuild()).schedule.queue.size() == 0) {
+         JBothHandler.afkTime.setGuild(event.getGuild());
+         JBothHandler.afkTime.start();
+      }
       event.getChannel().sendMessageEmbeds(MessageEmbeds.getGenericEmbed("SKIPINHO")).queue();
       PlayerManager.getInstance().getMusicManager(event.getGuild()).schedule.nextTrack();
       PlayerManager.getInstance().trackSize--; //looks ugly
@@ -45,4 +54,8 @@ public class Skip implements JBothHandlerInterface {
 
    }
 
+   @Override
+   public String[] getNames() {
+      return new String[] {"s", "S"};
+   }
 }

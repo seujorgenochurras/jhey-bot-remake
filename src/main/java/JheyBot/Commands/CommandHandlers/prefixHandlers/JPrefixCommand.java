@@ -5,12 +5,11 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 public class JPrefixCommand extends ListenerAdapter {
 
-   private static final List<JPrefixCommandInterface> commands = new ArrayList<>();
+   private static final HashSet<JPrefixCommandInterface> commands = new HashSet<>();
 
    public static void add(JPrefixCommandInterface command){
       commands.add(command);

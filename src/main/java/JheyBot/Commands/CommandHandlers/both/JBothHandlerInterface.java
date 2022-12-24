@@ -24,7 +24,7 @@ public interface JBothHandlerInterface extends CommandInterface {
 
    @Override
    default void build(){
-      JBothHandler.add(this);
+      JBothHandler.addCommand(this);
    }
 
    void callBack(JEventObject event);
