@@ -5,9 +5,9 @@ import JheyBot.Commands.CommandHandlers.both.JEventObject;
 import JheyBot.Commands.CommandHandlers.others.CommandType;
 import JheyBot.Commands.CommandHandlers.others.CommandTypes;
 import JheyBot.Commands.Embeds.MessageEmbeds;
-import JheyBot.Commands.play.musicHandler.BotNotInVoiceChannelException;
+import JheyBot.Commands.play.musicHandler.others.BotNotInVoiceChannelException;
 import JheyBot.Commands.play.musicHandler.PlayerManager;
-import JheyBot.Commands.play.musicHandler.UserNotInVoiceChannelException;
+import JheyBot.Commands.play.musicHandler.others.UserNotInVoiceChannelException;
 
 @CommandType(type = CommandTypes.BOTH)
 public class Skip implements JBothHandlerInterface {
@@ -19,7 +19,7 @@ public class Skip implements JBothHandlerInterface {
 
       event.getChannel().sendMessageEmbeds(MessageEmbeds.getGenericEmbed("SKIPINHO")).queue();
       PlayerManager.getInstance().getMusicManager(event.getGuild()).schedule.nextTrack();
-      --PlayerManager.getInstance().trackSize; //looks ugly
+      PlayerManager.getInstance().trackSize--; //looks ugly
 
    }
 

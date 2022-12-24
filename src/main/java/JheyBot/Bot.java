@@ -4,6 +4,7 @@ import JheyBot.Commands.CommandHandlers.both.JBothHandler;
 import JheyBot.Commands.CommandHandlers.others.CommandType;
 import JheyBot.Commands.CommandHandlers.prefixHandlers.JPrefixCommand;
 import JheyBot.Commands.CommandHandlers.slashHandlers.JSlashCommand;
+import JheyBot.Commands.play.musicHandler.others.BotDisconnectedTime;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
@@ -53,8 +54,8 @@ public class Bot {
    public ShardManager shardManager() {
       return shardManager;
    }
-
    public static void main(String[] args) {
+
       //Registering all commands
       try {
          //Obviously bot is not a command lol
@@ -78,7 +79,7 @@ public class Bot {
             }
          }
       } catch (LoginException e) {
-         throw new RuntimeException(e);
+         System.out.println("Login Exception, token is invalid");
       }
    }
 }

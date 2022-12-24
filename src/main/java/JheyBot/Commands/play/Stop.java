@@ -1,13 +1,15 @@
 package JheyBot.Commands.play;
 
+import JheyBot.Commands.CommandHandlers.both.JBothHandler;
 import JheyBot.Commands.CommandHandlers.both.JBothHandlerInterface;
 import JheyBot.Commands.CommandHandlers.both.JEventObject;
 import JheyBot.Commands.CommandHandlers.others.CommandType;
 import JheyBot.Commands.CommandHandlers.others.CommandTypes;
 import JheyBot.Commands.Embeds.MessageEmbeds;
-import JheyBot.Commands.play.musicHandler.BotNotInVoiceChannelException;
+import JheyBot.Commands.play.musicHandler.others.BotDisconnectedTime;
+import JheyBot.Commands.play.musicHandler.others.BotNotInVoiceChannelException;
 import JheyBot.Commands.play.musicHandler.PlayerManager;
-import JheyBot.Commands.play.musicHandler.UserNotInVoiceChannelException;
+import JheyBot.Commands.play.musicHandler.others.UserNotInVoiceChannelException;
 
 @CommandType(type = CommandTypes.BOTH)
 public class Stop implements JBothHandlerInterface {
@@ -20,7 +22,6 @@ public class Stop implements JBothHandlerInterface {
       PlayerManager.getInstance().getMusicManager(event.getGuild()).schedule.endTrack();
       PlayerManager.getInstance().trackSize = 0;
       event.getGuild().getAudioManager().closeAudioConnection();
-
    }
 
    @Override
@@ -35,6 +36,7 @@ public class Stop implements JBothHandlerInterface {
 
    @Override
    public void callBack(JEventObject event) {
+
       try {
          stopMusic(event);
       }catch (UserNotInVoiceChannelException e){
