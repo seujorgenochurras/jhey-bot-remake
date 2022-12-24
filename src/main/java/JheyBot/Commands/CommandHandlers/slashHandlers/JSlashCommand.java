@@ -6,13 +6,12 @@ import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 
 public class JSlashCommand extends ListenerAdapter {
 
-   public static List<JSlashCommandInterface> commands = new ArrayList<>();
+   private static final HashSet<JSlashCommandInterface> commands = new HashSet<>();
 
    public static void add(JSlashCommandInterface command){
      commands.add(command);

@@ -1,12 +1,10 @@
 package JheyBot.Commands.play;
 
-import JheyBot.Commands.CommandHandlers.both.JBothHandler;
 import JheyBot.Commands.CommandHandlers.both.JBothHandlerInterface;
 import JheyBot.Commands.CommandHandlers.both.JEventObject;
 import JheyBot.Commands.CommandHandlers.others.CommandType;
 import JheyBot.Commands.CommandHandlers.others.CommandTypes;
 import JheyBot.Commands.Embeds.MessageEmbeds;
-import JheyBot.Commands.play.musicHandler.others.BotDisconnectedTime;
 import JheyBot.Commands.play.musicHandler.others.BotNotInVoiceChannelException;
 import JheyBot.Commands.play.musicHandler.PlayerManager;
 import JheyBot.Commands.play.musicHandler.others.UserNotInVoiceChannelException;
@@ -46,5 +44,8 @@ public class Stop implements JBothHandlerInterface {
       }
    }
 
-
+   @Override
+   public String[] getNames() {
+      return new String[]{"d", "die", "sto", "DIE", "D", "STO"};
+   }
 }

@@ -1,6 +1,5 @@
-package JheyBot.Commands.play.musicHandler;
+package JheyBot.Commands.play.musicHandler.others;
 
-import JheyBot.Commands.CommandHandlers.both.JEventObject;
 import net.dv8tion.jda.api.entities.Guild;
 
 public class BotNotInVoiceChannelException extends IllegalStateException{
