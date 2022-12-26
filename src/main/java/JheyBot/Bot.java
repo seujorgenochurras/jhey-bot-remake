@@ -3,6 +3,7 @@ package JheyBot;
 import JheyBot.Commands.CommandHandlers.both.JBothHandler;
 import JheyBot.Commands.CommandHandlers.others.CommandType;
 import JheyBot.Commands.CommandHandlers.prefixHandlers.JPrefixCommand;
+import JheyBot.Commands.CommandHandlers.prefixHandlers.JPrefixCommandInterface;
 import JheyBot.Commands.CommandHandlers.slashHandlers.JSlashCommand;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -12,6 +13,7 @@ import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
+import se.michaelthelin.spotify.SpotifyApi;
 
 import javax.security.auth.login.LoginException;
 import java.lang.reflect.InvocationTargetException;
@@ -20,18 +22,22 @@ import java.util.Set;
 
 public class Bot {
 
-   public static ShardManager shardManager;
-   public static Dotenv dotenv;
+   private static ShardManager shardManager;
    public static String prefix = "";
+
+   public static SpotifyApi spotifyApi;
 
    public Bot() throws LoginException {
 
-      //Getting Token
-      dotenv = Dotenv.configure().load();
+      //Getting .env
+    Dotenv dotenv = Dotenv.configure().load();
 
       //TODO add custom prefix
       prefix = dotenv.get("PREFIX");
+
+
       DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(dotenv.get("TROLLED_BY_JOTINHA"));
+
       //Don't forget to enable all of them in "https://discord.com/developers/applications"
       builder.enableIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS));
 
@@ -40,6 +46,14 @@ public class Bot {
       builder.setActivity(Activity.watching("SEU PAI DE CALCINHA"));
       builder.setStatus(OnlineStatus.ONLINE);
 
+      //Loging in Spotify
+      String spotifyToken = dotenv.get("VAREJO");
+      if(spotifyToken != null){
+       spotifyApi = new SpotifyApi.Builder()
+              .setAccessToken(spotifyToken)
+              .build();
+      }
+
 
       shardManager = builder.build();
 
@@ -47,7 +61,10 @@ public class Bot {
       shardManager.addEventListener(new JSlashCommand());
       shardManager.addEventListener(new JPrefixCommand());
       shardManager.addEventListener(new JBothHandler());
+
    }
+
+
 
 
    public ShardManager shardManager() {
