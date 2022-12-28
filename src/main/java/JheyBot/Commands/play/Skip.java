@@ -1,7 +1,7 @@
 package JheyBot.Commands.play;
 
 import JheyBot.Commands.CommandHandlers.both.JBothHandler;
-import JheyBot.Commands.CommandHandlers.both.JBothHandlerInterface;
+import JheyBot.Commands.CommandHandlers.both.IBothICommand;
 import JheyBot.Commands.CommandHandlers.both.JEventObject;
 import JheyBot.Commands.CommandHandlers.others.CommandType;
 import JheyBot.Commands.CommandHandlers.others.CommandTypes;
@@ -11,7 +11,7 @@ import JheyBot.Commands.play.musicHandler.PlayerManager;
 import JheyBot.Commands.play.musicHandler.others.UserNotInVoiceChannelException;
 
 @CommandType(type = CommandTypes.BOTH)
-public class Skip implements JBothHandlerInterface {
+public class Skip implements IBothICommand {
 
    public static void skipMusic(JEventObject event) throws UserNotInVoiceChannelException, BotNotInVoiceChannelException {
       //If user is not on a voice channel

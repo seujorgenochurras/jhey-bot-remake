@@ -1,6 +1,6 @@
 package JheyBot.Commands.play;
 
-import JheyBot.Commands.CommandHandlers.both.JBothHandlerInterface;
+import JheyBot.Commands.CommandHandlers.both.IBothICommand;
 import JheyBot.Commands.CommandHandlers.both.JEventObject;
 import JheyBot.Commands.CommandHandlers.others.CommandType;
 import JheyBot.Commands.CommandHandlers.others.CommandTypes;
@@ -10,7 +10,7 @@ import JheyBot.Commands.play.musicHandler.PlayerManager;
 import JheyBot.Commands.play.musicHandler.others.UserNotInVoiceChannelException;
 
 @CommandType(type = CommandTypes.BOTH)
-public class Stop implements JBothHandlerInterface {
+public class Stop implements IBothICommand {
    public static void stopMusic(JEventObject event)throws UserNotInVoiceChannelException, BotNotInVoiceChannelException {
       //If user is not on a voice channel
       UserNotInVoiceChannelException.getUserVoiceState(event.getMember());

@@ -1,6 +1,6 @@
 package JheyBot.Commands.play;
 
-import JheyBot.Commands.CommandHandlers.both.JBothHandlerInterface;
+import JheyBot.Commands.CommandHandlers.both.IBothICommand;
 import JheyBot.Commands.CommandHandlers.both.JEventObject;
 import JheyBot.Commands.CommandHandlers.both.JEventTypes;
 import JheyBot.Commands.CommandHandlers.others.CommandType;
@@ -19,9 +19,8 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO make this work with spotify
 @CommandType(type = CommandTypes.BOTH)
-public class Play implements JBothHandlerInterface {
+public class Play implements IBothICommand {
    private void search(JEventObject event) {
       String query;
       try {

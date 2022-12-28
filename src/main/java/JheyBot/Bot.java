@@ -3,7 +3,6 @@ package JheyBot;
 import JheyBot.Commands.CommandHandlers.both.JBothHandler;
 import JheyBot.Commands.CommandHandlers.others.CommandType;
 import JheyBot.Commands.CommandHandlers.prefixHandlers.JPrefixCommand;
-import JheyBot.Commands.CommandHandlers.prefixHandlers.JPrefixCommandInterface;
 import JheyBot.Commands.CommandHandlers.slashHandlers.JSlashCommand;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -76,8 +75,6 @@ public class Bot {
       try {
          //Obviously bot is not a command lol
          Bot bot = new Bot();
-
-
          Reflections reflections = new Reflections("JheyBot.Commands", Scanners.values());
          Set<Class<?>> classes = reflections.getTypesAnnotatedWith(CommandType.class);
          for (Class<?> classe : classes) {

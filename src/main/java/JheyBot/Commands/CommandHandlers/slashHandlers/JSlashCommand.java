@@ -11,15 +11,15 @@ import java.util.HashSet;
 
 public class JSlashCommand extends ListenerAdapter {
 
-   private static final HashSet<JSlashCommandInterface> commands = new HashSet<>();
+   private static final HashSet<ISlashCommand> commands = new HashSet<>();
 
-   public static void add(JSlashCommandInterface command){
+   public static void add(ISlashCommand command){
      commands.add(command);
    }
 
    @Override
    public void onReady(@NotNull ReadyEvent event) {
-      for(JSlashCommandInterface command : commands) {
+      for(ISlashCommand command : commands) {
          if (command.getOptions() == null) {
             event.getJDA().upsertCommand(command.getName(), command.getDescription()).queue();
          } else {
@@ -30,7 +30,7 @@ public class JSlashCommand extends ListenerAdapter {
 
    @Override
    public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
-      for(JSlashCommandInterface command : commands){
+      for(ISlashCommand command : commands){
          if(event.getName().equals(command.getName())){
             command.callBack(event);
             break;

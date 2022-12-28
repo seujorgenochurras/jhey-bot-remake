@@ -1,13 +1,13 @@
 package JheyBot.Commands.CommandHandlers.both;
 
-import JheyBot.Commands.CommandHandlers.others.CommandInterface;
+import JheyBot.Commands.CommandHandlers.others.ICommand;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface JBothHandlerInterface extends CommandInterface {
+public interface IBothICommand extends ICommand {
    String getDescription();
 
    default List<String> getArgs(JEventObject event){

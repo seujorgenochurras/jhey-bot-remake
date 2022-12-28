@@ -18,8 +18,8 @@ public class JBothHandler extends ListenerAdapter {
    //TODO make time changeable on runtime
    public static BotDisconnectedTime afkTime = new BotDisconnectedTime(300);
    private final String prefix = Bot.prefix;
-   public static HashSet<JBothHandlerInterface> commands = new HashSet<>();
-   public static void addCommand(JBothHandlerInterface command){
+   public static HashSet<IBothICommand> commands = new HashSet<>();
+   public static void addCommand(IBothICommand command){
       commands.add(command);
    }
    @Override
@@ -36,16 +36,16 @@ public class JBothHandler extends ListenerAdapter {
    @Override
    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
       String firstArg = event.getMessage().getContentRaw().split(" ")[0];
-      JBothHandlerInterface matchingCommand = findMatchingCommand(firstArg);
+      IBothICommand matchingCommand = findMatchingCommand(firstArg);
       if(matchingCommand != null){
          JEventObject eventObject = new JEventObject(event);
          matchingCommand.callBack(eventObject);
       }
 
    }
-   private JBothHandlerInterface findMatchingCommand(String firstArg) {
+   private IBothICommand findMatchingCommand(String firstArg) {
       //todo learn streams
-      for (JBothHandlerInterface command : commands) {
+      for (IBothICommand command : commands) {
          if (!firstArg.startsWith(prefix)) {
             if (firstArg.equals(command.getName())) {
                return command;
@@ -65,7 +65,7 @@ public class JBothHandler extends ListenerAdapter {
 
    @Override
    public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
-      JBothHandlerInterface matchingCommand = findMatchingCommand(event.getName());
+      IBothICommand matchingCommand = findMatchingCommand(event.getName());
       if(matchingCommand != null){
          JEventObject eventObject = new JEventObject(event);
          matchingCommand.callBack(eventObject);
