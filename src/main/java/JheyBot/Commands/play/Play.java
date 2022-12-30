@@ -1,12 +1,13 @@
 package JheyBot.Commands.play;
 
-import JheyBot.Commands.CommandHandlers.both.JBothHandlerInterface;
+import JheyBot.Commands.CommandHandlers.both.IBothICommand;
 import JheyBot.Commands.CommandHandlers.both.JEventObject;
 import JheyBot.Commands.CommandHandlers.both.JEventTypes;
 import JheyBot.Commands.CommandHandlers.others.CommandType;
 import JheyBot.Commands.CommandHandlers.others.CommandTypes;
 import JheyBot.Commands.Embeds.MessageEmbeds;
 import JheyBot.Commands.play.musicHandler.PlayerManager;
+import JheyBot.Commands.play.musicHandler.SpotifyHandler;
 import JheyBot.Commands.play.musicHandler.others.UserNotInVoiceChannelException;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -18,9 +19,8 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO make this work with spotify
 @CommandType(type = CommandTypes.BOTH)
-public class Play implements JBothHandlerInterface {
+public class Play implements IBothICommand {
    private void search(JEventObject event) {
       String query;
       try {
@@ -30,10 +30,15 @@ public class Play implements JBothHandlerInterface {
          } else{
             query = event.getOption("query").getAsString();
          }
-      if (!isURL(query)) {
+         System.out.println(query);
+      if (!isURL(query) || SpotifyHandler.isSpotifyURL(query)) {
+         if(SpotifyHandler.isSpotifyURL(query)){
+            query = new SpotifyHandler(query).getTrackName();
+         }
          query = "ytsearch:" + query + " audio";
       }
-            PlayerManager.getInstance().loadAndPlay(event, query.toString());
+
+            PlayerManager.getInstance().loadAndPlay(event, query);
          }  catch (NullPointerException e) {
          event.getChannel().sendMessageEmbeds(MessageEmbeds.getErrorEmbed("Que musica?")).queue();
       } catch (Exception e) {
@@ -60,6 +65,7 @@ public class Play implements JBothHandlerInterface {
          return false;
       }
    }
+
    @Override
    public String getName() {
       return "play";

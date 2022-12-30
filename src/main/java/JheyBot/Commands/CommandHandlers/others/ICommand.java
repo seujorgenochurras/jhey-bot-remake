@@ -1,6 +1,6 @@
 package JheyBot.Commands.CommandHandlers.others;
 
-public interface CommandInterface{
+public interface ICommand {
    String getName();
 
    default String[] getNames(){

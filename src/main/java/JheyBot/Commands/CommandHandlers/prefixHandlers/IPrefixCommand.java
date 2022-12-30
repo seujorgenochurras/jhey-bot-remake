@@ -1,12 +1,12 @@
 package JheyBot.Commands.CommandHandlers.prefixHandlers;
 
-import JheyBot.Commands.CommandHandlers.others.CommandInterface;
+import JheyBot.Commands.CommandHandlers.others.ICommand;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public interface JPrefixCommandInterface extends CommandInterface {
+public interface IPrefixCommand extends ICommand {
 
    void callBack(MessageReceivedEvent event);
 
