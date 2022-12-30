@@ -1,6 +1,7 @@
 package JheyBot.Commands.CommandHandlers.both;
 
 import JheyBot.Bot;
+import JheyBot.Commands.play.musicHandler.others.BotDisconnectedTime;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
@@ -19,7 +20,7 @@ public class JBothHandler extends ListenerAdapter {
    public static void addCommand(JBothHandlerInterface command){
       commands.add(command);
    }
-
+   public static BotDisconnectedTime afkTime = new BotDisconnectedTime(300);
    private final String prefix = Bot.prefix;
    public static HashSet<JBothHandlerInterface> commands = new HashSet<>();
    @Override
