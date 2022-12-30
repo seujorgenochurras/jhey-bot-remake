@@ -1,8 +1,6 @@
 package JheyBot.Commands.CommandHandlers.both;
 
 import JheyBot.Bot;
-import JheyBot.Commands.play.musicHandler.others.BotDisconnectedTime;
-import com.iwebpp.crypto.TweetNaclFast;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
@@ -10,8 +8,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
-import java.util.List;
-import java.util.ArrayList;
+
 
 
 public class JBothHandler extends ListenerAdapter {
@@ -19,10 +16,10 @@ public class JBothHandler extends ListenerAdapter {
 
    //Time that bot can stay on channel without any music on
    //TODO make time changeable on runtime
-   public static BotDisconnectedTime afkTime = new BotDisconnectedTime(300);
    public static void addCommand(JBothHandlerInterface command){
       commands.add(command);
    }
+
    private final String prefix = Bot.prefix;
    public static HashSet<JBothHandlerInterface> commands = new HashSet<>();
    @Override
