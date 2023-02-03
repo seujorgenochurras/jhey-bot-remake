@@ -9,9 +9,9 @@ import java.util.HashSet;
 
 public class JPrefixCommand extends ListenerAdapter {
 
-   private static final HashSet<JPrefixCommandInterface> commands = new HashSet<>();
+   private static final HashSet<IPrefixCommand> commands = new HashSet<>();
 
-   public static void add(JPrefixCommandInterface command){
+   public static void add(IPrefixCommand command){
       commands.add(command);
    }
 
@@ -19,7 +19,7 @@ public class JPrefixCommand extends ListenerAdapter {
    @Override
    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
       String prefix = Bot.prefix;
-     for(JPrefixCommandInterface command : commands){
+     for(IPrefixCommand command : commands){
        if(event.getMessage().getContentRaw().startsWith(prefix + command.getName())){
           command.callBack(event);
           break;
