@@ -7,9 +7,8 @@ import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 public final class BotDisconnectedTime{
-   private int seconds;
+   private final int seconds;
    private Guild guild;
-
 
    public Guild getGuild() {
       return guild;
@@ -17,8 +16,6 @@ public final class BotDisconnectedTime{
    public void setGuild(Guild guild) {
       this.guild = guild;
    }
-
-
 
    public BotDisconnectedTime(int seconds){
    this.seconds = seconds;

@@ -1,4 +1,4 @@
-package JheyBot.Commands.CommandHandlers.others;
+package JheyBot.CommandHandlers.others;
 
 public enum CommandTypes {
    SLASH_COMMAND,

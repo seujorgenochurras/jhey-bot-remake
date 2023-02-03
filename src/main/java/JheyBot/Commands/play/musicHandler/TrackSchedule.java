@@ -1,8 +1,7 @@
 //Credits to TR!STAN (I just copied his code)
 package JheyBot.Commands.play.musicHandler;
 
-import JheyBot.Bot;
-import JheyBot.Commands.CommandHandlers.both.JBothHandler;
+import JheyBot.CommandHandlers.both.JBothHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
@@ -17,7 +16,7 @@ import static com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason.FINISHE
 public class TrackSchedule extends AudioEventAdapter {
    public final AudioPlayer audioPlayer;
    public final BlockingDeque<AudioTrack> queue;
-   private Guild guild;
+   private final Guild guild;
 
    public TrackSchedule(AudioPlayer audioPlayer, Guild guild){
       this.audioPlayer = audioPlayer;

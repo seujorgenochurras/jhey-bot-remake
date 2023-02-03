@@ -1,10 +1,9 @@
 package JheyBot;
 
-import JheyBot.Commands.CommandHandlers.both.JBothHandler;
-import JheyBot.Commands.CommandHandlers.others.CommandType;
-import JheyBot.Commands.CommandHandlers.prefixHandlers.JPrefixCommand;
-import JheyBot.Commands.CommandHandlers.slashHandlers.JSlashCommand;
-import JheyBot.Commands.play.musicHandler.others.BotDisconnectedTime;
+import JheyBot.CommandHandlers.both.JBothHandler;
+import JheyBot.CommandHandlers.others.CommandType;
+import JheyBot.CommandHandlers.prefixHandlers.JPrefixCommand;
+import JheyBot.CommandHandlers.slashHandlers.JSlashCommand;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
@@ -23,15 +22,14 @@ public class Bot {
 
    public static ShardManager shardManager;
    public static Dotenv dotenv;
-   public static String prefix = "";
+   //TODO add custom prefix
+   public static String prefix = dotenv.get("PREFIX");
 
    public Bot() throws LoginException {
 
       //Getting Token
       dotenv = Dotenv.configure().load();
 
-      //TODO add custom prefix
-      prefix = dotenv.get("PREFIX");
       DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(dotenv.get("TROLLED_BY_JOTINHA"));
       //Don't forget to enable all of them in "https://discord.com/developers/applications"
       builder.enableIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS));
@@ -60,8 +58,6 @@ public class Bot {
       try {
          //Obviously bot is not a command lol
          Bot bot = new Bot();
-
-
          Reflections reflections = new Reflections("JheyBot.Commands", Scanners.values());
          Set<Class<?>> classes = reflections.getTypesAnnotatedWith(CommandType.class);
          for (Class<?> classe : classes) {

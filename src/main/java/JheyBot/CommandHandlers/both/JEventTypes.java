@@ -1,4 +1,4 @@
-package JheyBot.Commands.CommandHandlers.both;
+package JheyBot.CommandHandlers.both;
 
 public enum JEventTypes {
    MessageReceivedEvent,

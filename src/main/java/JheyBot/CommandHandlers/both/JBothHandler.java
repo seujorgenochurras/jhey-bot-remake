@@ -1,4 +1,4 @@
-package JheyBot.Commands.CommandHandlers.both;
+package JheyBot.CommandHandlers.both;
 
 import JheyBot.Bot;
 import JheyBot.Commands.play.musicHandler.others.BotDisconnectedTime;
@@ -7,7 +7,9 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.HashSet;
 
 
@@ -17,10 +19,10 @@ public class JBothHandler extends ListenerAdapter {
 
    //Time that bot can stay on channel without any music on
    //TODO make time changeable on runtime
+   public static BotDisconnectedTime afkTime = new BotDisconnectedTime(300);
    public static void addCommand(JBothHandlerInterface command){
       commands.add(command);
    }
-   public static BotDisconnectedTime afkTime = new BotDisconnectedTime(300);
    private final String prefix = Bot.prefix;
    public static HashSet<JBothHandlerInterface> commands = new HashSet<>();
    @Override
@@ -36,6 +38,7 @@ public class JBothHandler extends ListenerAdapter {
 
    @Override
    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+      if(event.getAuthor().isBot()) return;
       String firstArg = event.getMessage().getContentRaw().split(" ")[0];
       JBothHandlerInterface matchingCommand = findMatchingCommand(firstArg);
       if(matchingCommand != null){
@@ -44,26 +47,18 @@ public class JBothHandler extends ListenerAdapter {
       }
 
    }
-   private JBothHandlerInterface findMatchingCommand(String firstArg) {
-      //todo learn streams
-      for (JBothHandlerInterface command : commands) {
-         if (!firstArg.startsWith(prefix)) {
-            if (firstArg.equals(command.getName())) {
-               return command;
-            }
-         } else if ((prefix + command.getName()).equals(firstArg)) return command;
-          else if (command.getNames() != null) {
-               for (String name : command.getNames()) {
-                  if ((prefix + name).equals(firstArg)) {
-                     return command;
-                  }
-               }
-            }
-         }
-      return null;
-      }
-
-
+   @Nullable
+   private JBothHandlerInterface findMatchingCommand(@NotNull String firstArg) {
+      //this is for slash commands
+      final String finalArg = firstArg.startsWith(prefix) ?
+              firstArg.replace(prefix, "") : firstArg;
+      return commands.stream().filter(command -> command.getName().equals(finalArg) ||
+                      (command.getNames() != null &&
+                              Arrays.asList(command.getNames()).contains(finalArg)
+                      ))
+              .findFirst().
+              orElse(null);
+   }
    @Override
    public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
       JBothHandlerInterface matchingCommand = findMatchingCommand(event.getName());

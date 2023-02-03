@@ -1,4 +1,4 @@
-package JheyBot.Commands.CommandHandlers.prefixHandlers;
+package JheyBot.CommandHandlers.prefixHandlers;
 
 import JheyBot.Bot;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;

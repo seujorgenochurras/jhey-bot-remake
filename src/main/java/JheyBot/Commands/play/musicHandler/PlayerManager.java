@@ -1,7 +1,7 @@
 package JheyBot.Commands.play.musicHandler;
 
-import JheyBot.Commands.CommandHandlers.both.JBothHandler;
-import JheyBot.Commands.CommandHandlers.both.JEventObject;
+import JheyBot.CommandHandlers.both.JBothHandler;
+import JheyBot.CommandHandlers.both.JEventObject;
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;

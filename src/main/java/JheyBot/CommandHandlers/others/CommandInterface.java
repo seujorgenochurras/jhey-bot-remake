@@ -1,4 +1,4 @@
-package JheyBot.Commands.CommandHandlers.others;
+package JheyBot.CommandHandlers.others;
 
 public interface CommandInterface{
    String getName();

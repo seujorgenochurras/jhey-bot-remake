@@ -1,4 +1,4 @@
-package JheyBot.Commands.Embeds;
+package JheyBot.Embeds;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;

@@ -1,6 +1,6 @@
-package JheyBot.Commands.CommandHandlers.prefixHandlers;
+package JheyBot.CommandHandlers.prefixHandlers;
 
-import JheyBot.Commands.CommandHandlers.others.CommandInterface;
+import JheyBot.CommandHandlers.others.CommandInterface;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package JheyBot.Commands.CommandHandlers.both;
+package JheyBot.CommandHandlers.both;
 
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -18,7 +18,7 @@ public class JEventObject {
    private Message message;
    private SlashCommandInteraction interaction;
 
-   private JEventTypes type;
+   private final JEventTypes type;
 
    public JEventTypes getType(){
       return type;

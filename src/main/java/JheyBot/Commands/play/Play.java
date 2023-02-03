@@ -1,11 +1,11 @@
 package JheyBot.Commands.play;
 
-import JheyBot.Commands.CommandHandlers.both.JBothHandlerInterface;
-import JheyBot.Commands.CommandHandlers.both.JEventObject;
-import JheyBot.Commands.CommandHandlers.both.JEventTypes;
-import JheyBot.Commands.CommandHandlers.others.CommandType;
-import JheyBot.Commands.CommandHandlers.others.CommandTypes;
-import JheyBot.Commands.Embeds.MessageEmbeds;
+import JheyBot.CommandHandlers.both.JBothHandlerInterface;
+import JheyBot.CommandHandlers.both.JEventObject;
+import JheyBot.CommandHandlers.both.JEventTypes;
+import JheyBot.CommandHandlers.others.CommandType;
+import JheyBot.CommandHandlers.others.CommandTypes;
+import JheyBot.Embeds.MessageEmbeds;
 import JheyBot.Commands.play.musicHandler.PlayerManager;
 import JheyBot.Commands.play.musicHandler.others.UserNotInVoiceChannelException;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;

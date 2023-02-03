@@ -1,6 +1,6 @@
-package JheyBot.Commands.CommandHandlers.both;
+package JheyBot.CommandHandlers.both;
 
-import JheyBot.Commands.CommandHandlers.others.CommandInterface;
+import JheyBot.CommandHandlers.others.CommandInterface;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 import javax.annotation.Nullable;

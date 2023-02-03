@@ -1,4 +1,4 @@
-package JheyBot.Commands.CommandHandlers.others;
+package JheyBot.CommandHandlers.others;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

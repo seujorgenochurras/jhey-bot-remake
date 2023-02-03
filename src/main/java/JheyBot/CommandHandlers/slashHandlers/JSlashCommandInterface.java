@@ -1,6 +1,6 @@
-package JheyBot.Commands.CommandHandlers.slashHandlers;
+package JheyBot.CommandHandlers.slashHandlers;
 
-import JheyBot.Commands.CommandHandlers.others.CommandInterface;
+import JheyBot.CommandHandlers.others.CommandInterface;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
